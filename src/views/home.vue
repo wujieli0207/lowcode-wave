@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container">
     <el-header>
       <toolbar />
     </el-header>
@@ -11,8 +11,11 @@
 
       <el-container>
         <edit-view />
-        <right-panel />
       </el-container>
+
+      <el-aside width="200px">
+        <right-panel />
+      </el-aside>
     </el-container>
   </el-container>
 </template>
@@ -23,3 +26,9 @@ import LeftPanel from './left-panel/index.vue'
 import EditView from './edit-view/index.vue'
 import RightPanel from './right-panel/index.vue'
 </script>
+
+<style scoped lang="scss">
+.container {
+  height: 100%;
+}
+</style>
