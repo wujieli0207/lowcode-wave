@@ -1,0 +1,43 @@
+.component-group {
+  display: flex;
+  flex-wrap: wrap;
+
+  .component-item {
+    width: 90px;
+    height: 50px;
+    padding: 0 8px;
+    margin-right: 8px;
+    border: 1px solid #e8e9eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:hover {
+      cursor: move;
+      border-color: #409eff;
+    }
+
+    &::after {
+      position: absolute;
+      content: attr(data-label);
+      top: 0;
+      left: 3px;
+      z-index: 1;
+      padding: 2px;
+      font-size: 12px;
+      color: #ffffff;
+      background: #409eff;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+    }
+  }
+}
