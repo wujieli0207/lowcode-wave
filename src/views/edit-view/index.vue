@@ -11,24 +11,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './components/RenderComp'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
-import type { IUIComponent } from '#/components'
+import type { IFieldConfig } from '#/editor'
 import { storeToRefs } from 'pinia'
 import { toRefs } from 'vue'
 
 const jsonConfigStore = useJsonConfigStore()
 
 const { jsonConfig } = storeToRefs(jsonConfigStore)
-console.log('jsonConfig: ', jsonConfig)
 const { currentPage } = toRefs(jsonConfig.value)
 
 const { setCurrentFiled } = jsonConfigStore
 
-function handleSelectComponent(element) {
-  console.log('element: ', element)
+function handleSelectComponent(element: IFieldConfig) {
   setCurrentFiled(element)
 }
 </script>
