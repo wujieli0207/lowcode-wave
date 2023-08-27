@@ -2,7 +2,10 @@ import { Edit } from '@element-plus/icons-vue'
 import { defineComponent, ref } from 'vue'
 import uiComponents from '@/components/UIComponents'
 import { DraggableTransitionGroup } from '@/components/Drag'
+import { cloneDeep } from 'lodash-es'
 import styles from './index.module.scss'
+import type { IUIComponent } from '#/components'
+import { cloneFieldInstance } from './utils'
 
 export default defineComponent({
   key: 'componentsPlugin',
@@ -13,6 +16,10 @@ export default defineComponent({
     const components = ref(Object.values(uiComponents))
     console.log('components: ', components.value)
 
+    function handleClone(fieldElement: IUIComponent) {
+      return cloneFieldInstance(cloneDeep(fieldElement))
+    }
+
     return (
       <>
         <DraggableTransitionGroup
@@ -20,6 +27,7 @@ export default defineComponent({
           item-key="key"
           group={{ name: 'components', pull: 'clone', put: false }}
           class={styles['component-group']}
+          clone={handleClone}
         >
           {{
             item: ({ element }) => (

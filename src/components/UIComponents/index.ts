@@ -5,7 +5,7 @@ const uiComponents: Record<string, IUIComponent> = {}
 
 for (const key in modules) {
   const module = (modules[key] as any).default
-  uiComponents[module.key] = module
+  uiComponents[module.type] = module
 }
 
 export default uiComponents

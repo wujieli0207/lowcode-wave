@@ -4,6 +4,7 @@
     v-bind="{ ...defaultDragOptions, ...$attrs }"
     :item-key="itemKey"
     :group="group"
+    :clone="clone"
     @start="isDrug = true"
     @end="isDrug = false"
   >
@@ -19,6 +20,7 @@
 import Draggable from 'vuedraggable'
 import { useVModel } from '@vueuse/core'
 import { computed } from 'vue'
+import { PropType } from 'vue'
 
 defineOptions({
   name: 'DraggableTransitionGroup'
@@ -40,6 +42,10 @@ const props = defineProps({
   group: {
     type: Object,
     default: () => ({ name: 'components' })
+  },
+  clone: {
+    type: Function as PropType<(original: any) => any>,
+    default: () => {}
   }
 })
 
