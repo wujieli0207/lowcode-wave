@@ -3,6 +3,7 @@ import { App } from 'vue'
 import {
   ElButton,
   ElInput,
+  ElInputNumber,
   ElContainer,
   ElHeader,
   ElAside,
@@ -14,12 +15,15 @@ import {
   ElOption,
   ElForm,
   ElFormItem,
-  ElSwitch
+  ElSwitch,
+  ElCollapse,
+  ElCollapseItem
 } from 'element-plus'
 
 const components = [
   ElButton,
   ElInput,
+  ElInputNumber,
   ElContainer,
   ElHeader,
   ElAside,
@@ -31,7 +35,9 @@ const components = [
   ElOption,
   ElForm,
   ElFormItem,
-  ElSwitch
+  ElSwitch,
+  ElCollapse,
+  ElCollapseItem
 ]
 
 export function setupElementPlus(app: App) {

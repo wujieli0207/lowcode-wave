@@ -1,6 +1,6 @@
 <template>
   <div class="right-panel">
-    <el-tabs v-model="activeTab">
+    <el-tabs v-model="activeTab" class="right-panel__tabs">
       <el-tab-pane
         v-for="item in RightPanel"
         :key="item.value"
@@ -44,5 +44,9 @@ const activeTab = ref(RightPanel[0].value)
 .right-panel {
   height: 100%;
   border-left: 1px solid #e6e6e8;
+
+  .right-panel__tabs {
+    height: 100%;
+  }
 }
 </style>

@@ -3,7 +3,8 @@
  */
 
 import type { CSSProperties } from 'vue'
-import { IInputPropsConfig } from '@/components/UIComponents/Button/createProps'
+import { IButtonPropsConfig } from '@/components/UIComponents/Button/createProps'
+import { IInputPropsConfig } from '@/components/UIComponents/Input/createProps'
 
 export interface IProjectConfig {
   projectId: string
@@ -29,12 +30,12 @@ export interface IFieldConfig {
   styles: CSSProperties
 }
 
-export type IFieldProps = IFieldBasicProps | IInputPropsConfig
+export type IFieldProps = IFieldBasicProps | IButtonPropsConfig | IInputPropsConfig
 
 export interface IFieldBasicProps {
   isRequired?: boolean | string // 是否必填，true-必填，支持表达式
-  isShow?: boolean | string // 是否显示，true-显示，支持表达式
-  isEdit?: boolean | string // 是否可编辑，true-可编辑，支持表达式
+  isHidden?: boolean | string // 是否隐藏，true-隐藏，支持表达式
+  isDisabled?: boolean | string // 是否禁用，true-禁用，支持表达式
 }
 
 export interface IEvent {}

@@ -1,5 +1,6 @@
 import { IUIComponent } from '#/components'
 import { UI_KV, UI_VL, UI_TAG_KV } from '@/constant/componentConstant'
+import { createProps } from './createProps'
 
 const input: IUIComponent = {
   label: UI_VL[UI_KV.INPUT],
@@ -9,7 +10,8 @@ const input: IUIComponent = {
   preview: () => <el-input placeholder="请输入" />,
   render: () => {
     return <el-input>输入框</el-input>
-  }
+  },
+  props: createProps()
 }
 
 export default input

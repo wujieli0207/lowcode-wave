@@ -1,5 +1,6 @@
 <template>
   <div class="edit">
+    {{ jsonConfig }}
     <draggable-transition-group v-model="currentPage.childrens" class="edit__drag-group">
       <template #item="{ element }">
         <div class="edit__drag-group__item" @mousedown="handleSelectComponent(element)">

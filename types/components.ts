@@ -8,7 +8,7 @@ export interface IUIComponent {
   tags: string[] // 标签
   preview: () => JSX.Element // 预览
   render: (params: IUIComponentRenderParams) => JSX.Element // 渲染
-  props: Record<keyof IFieldProps, ComponentConfigProps> // 组件支持配置的属性
+  props: IComponentConfigPropGroup<IFieldProps>[] // 组件支持配置的属性
 }
 
 export interface IUIComponentRenderParams {
@@ -26,6 +26,12 @@ export type ComponentConfigProps = {
 } & {
   min?: number
   max?: number
+}
+
+// 属性配置分组
+export interface IComponentConfigPropGroup<T> {
+  groupName: string
+  childrens: Record<keyof T, ComponentConfigProps>
 }
 
 export enum ComponentConfigType {

@@ -1,7 +1,7 @@
 import { IUIComponent } from '#/components'
 
 import { UI_KV, UI_VL, UI_TAG_KV } from '@/constant/componentConstant'
-import { IInputPropsConfig, createProps } from './createProps'
+import { IButtonPropsConfig, createProps } from './createProps'
 
 const button: IUIComponent = {
   label: UI_VL[UI_KV.BUTTON],
@@ -11,7 +11,7 @@ const button: IUIComponent = {
   preview: () => <el-button>提交</el-button>,
   render: (params) => {
     const { props } = params
-    return <el-button {...props}>{(props as IInputPropsConfig).buttonText || '按钮'}</el-button>
+    return <el-button {...props}>{(props as IButtonPropsConfig).buttonText || '按钮'}</el-button>
   },
   props: createProps()
 }
