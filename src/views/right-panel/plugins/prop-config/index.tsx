@@ -9,6 +9,8 @@ import styles from './index.module.scss'
 export default defineComponent({
   name: 'PropConfig',
   setup() {
+    const activeCollapse = ref('general')
+
     const jsonConfigStore = useJsonConfigStore()
 
     const { jsonConfig } = storeToRefs(jsonConfigStore)
@@ -44,7 +46,6 @@ export default defineComponent({
     }
 
     const FormRenderer = () => {
-      const activeCollapse = ref('general')
       const formContent: JSX.Element[] = []
 
       if (currentField.value) {
