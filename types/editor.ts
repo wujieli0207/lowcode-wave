@@ -3,6 +3,7 @@
  */
 
 import type { CSSProperties } from 'vue'
+import { IInputPropsConfig } from '@/components/UIComponents/Button/createProps'
 
 export interface IProjectConfig {
   projectId: string
@@ -28,7 +29,7 @@ export interface IFieldConfig {
   styles: CSSProperties
 }
 
-export type IFieldProps = IFieldBasicProps
+export type IFieldProps = IFieldBasicProps | IInputPropsConfig
 
 export interface IFieldBasicProps {
   isRequired?: boolean | string // 是否必填，true-必填，支持表达式

@@ -11,7 +11,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const renderFn = uiComponents[props.element.type].render
-    return renderFn
+    return () => {
+      return uiComponents[props.element.type].render({
+        props: props.element.props || {}
+      })
+    }
   }
 })

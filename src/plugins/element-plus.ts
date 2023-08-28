@@ -10,7 +10,11 @@ import {
   ElTabPane,
   ElIcon,
   ElTooltip,
-  ElSelect
+  ElSelect,
+  ElOption,
+  ElForm,
+  ElFormItem,
+  ElSwitch
 } from 'element-plus'
 
 const components = [
@@ -23,7 +27,11 @@ const components = [
   ElTabPane,
   ElIcon,
   ElTooltip,
-  ElSelect
+  ElSelect,
+  ElOption,
+  ElForm,
+  ElFormItem,
+  ElSwitch
 ]
 
 export function setupElementPlus(app: App) {
