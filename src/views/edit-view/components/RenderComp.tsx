@@ -1,12 +1,12 @@
 import { PropType, defineComponent } from 'vue'
 import uiComponents from '@/components/UIComponents'
-import type { IUIComponent } from '#/components'
+import type { IFieldConfig } from '#/editor'
 
 export default defineComponent({
   name: 'RenderComp',
   props: {
     element: {
-      type: Object as PropType<IUIComponent>,
+      type: Object as PropType<IFieldConfig>,
       default: () => {}
     }
   },

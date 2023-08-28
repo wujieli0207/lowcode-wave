@@ -14,6 +14,7 @@ export function cloneFieldInstance(fieldElement: IUIComponent): IFieldConfig {
     value: '',
     props: {},
     events: [],
-    styles: {}
+    styles: {},
+    isFocus: false
   }
 }

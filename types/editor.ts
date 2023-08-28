@@ -28,6 +28,7 @@ export interface IFieldConfig {
   props: IFieldProps
   events: IEvent[]
   styles: CSSProperties
+  isFocus: boolean // 是否是被选中状态
 }
 
 export type IFieldProps = IFieldBasicProps | IButtonPropsConfig | IInputPropsConfig
