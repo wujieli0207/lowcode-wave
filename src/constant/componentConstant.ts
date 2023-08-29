@@ -12,7 +12,7 @@ export const { UI_KV, UI_VL } = defineConstants(
   'UI'
 )
 
-export const { UI_TAG_KV } = defineConstants(
+export const { UI_TAG_KV, UI_TAG_VL } = defineConstants(
   [
     { key: 'BASE', value: 'base', label: '基础组件' },
     { key: 'CONTAINER', value: 'container', label: '容器组件' },
