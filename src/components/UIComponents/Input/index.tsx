@@ -2,7 +2,7 @@ import { IUIComponent } from '#/components'
 import { UI_KV, UI_VL, UI_TAG_KV } from '@/constant/componentConstant'
 import { createProps } from './createProps'
 
-const input: IUIComponent = {
+export default {
   label: UI_VL[UI_KV.INPUT],
   type: UI_KV.INPUT,
   isBasic: true,
@@ -12,6 +12,4 @@ const input: IUIComponent = {
     return <el-input>输入框</el-input>
   },
   props: createProps()
-}
-
-export default input
+} as IUIComponent

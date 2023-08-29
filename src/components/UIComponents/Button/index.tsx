@@ -3,7 +3,7 @@ import { IUIComponent } from '#/components'
 import { UI_KV, UI_VL, UI_TAG_KV } from '@/constant/componentConstant'
 import { IButtonPropsConfig, createProps } from './createProps'
 
-const button: IUIComponent = {
+export default {
   label: UI_VL[UI_KV.BUTTON],
   type: UI_KV.BUTTON,
   isBasic: true,
@@ -14,6 +14,4 @@ const button: IUIComponent = {
     return <el-button {...props}>{(props as IButtonPropsConfig).buttonText || '按钮'}</el-button>
   },
   props: createProps()
-}
-
-export default button
+} as IUIComponent
