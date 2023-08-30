@@ -11,7 +11,7 @@
             </el-tooltip>
           </template>
 
-          <component :is="plugin.setup" />
+          <component :is="plugin.setup()" />
         </el-tab-pane>
       </el-tabs>
     </div>
