@@ -17,7 +17,9 @@ import {
   ElFormItem,
   ElSwitch,
   ElCollapse,
-  ElCollapseItem
+  ElCollapseItem,
+  ElRow,
+  ElCol
 } from 'element-plus'
 
 const components = [
@@ -37,7 +39,9 @@ const components = [
   ElFormItem,
   ElSwitch,
   ElCollapse,
-  ElCollapseItem
+  ElCollapseItem,
+  ElRow,
+  ElCol
 ]
 
 export function setupElementPlus(app: App) {

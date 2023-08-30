@@ -13,7 +13,8 @@ export default defineComponent({
   setup(props) {
     return () => {
       return uiComponents[props.element.type].render({
-        props: props.element.props || {}
+        props: props.element.props || {},
+        element: props.element
       })
     }
   }

@@ -5,7 +5,6 @@ import { reactive } from 'vue'
 interface IJsonConfig {
   currentField: Nullable<IFieldConfig>
   currentPage: IPageConfig // 当前操作的页面
-  jsonData: Record<string, unknown> // 完整 json 数据
 }
 
 export const useJsonConfigStore = defineStore('jsonConfig', () => {
@@ -13,13 +12,12 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     pageId: 'temp',
     pageName: 'temp',
     pageRoute: '/temp',
-    childrens: []
+    children: []
   }
 
   const jsonConfig: IJsonConfig = reactive({
     currentField: null,
-    currentPage,
-    jsonData: {}
+    currentPage
   })
 
   function setCurrentFiled(field: IFieldConfig) {

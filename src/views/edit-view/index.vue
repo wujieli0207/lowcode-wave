@@ -1,14 +1,18 @@
 <template>
   <div class="edit">
     {{ jsonConfig }}
-    <draggable-transition-group v-model="currentPage.childrens" class="edit__drag-group">
+    <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
       <template #item="{ element }">
         <div
           class="edit__drag-group__item"
           :class="{ focus: element.isFocus }"
           @mousedown="handleSelectComponent(element)"
         >
-          <render-comp :element="element" />
+          <render-comp :element="element">
+            <template v-for="key in element.children" :key="key" #[key]>
+              <render-slot-item v-model:children="element.children" :slot-key="key" />
+            </template>
+          </render-comp>
         </div>
       </template>
     </draggable-transition-group>
@@ -18,6 +22,7 @@
 <script lang="ts" setup>
 import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './components/RenderComp'
+import RenderSlotItem from './components/RenderSlotItem.vue'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import type { IFieldConfig } from '#/editor'
 import { storeToRefs } from 'pinia'

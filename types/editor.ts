@@ -5,18 +5,19 @@
 import type { CSSProperties } from 'vue'
 import { IButtonPropsConfig } from '@/components/UIComponents/Button/createProps'
 import { IInputPropsConfig } from '@/components/UIComponents/Input/createProps'
+import { ISelectPropsConfig } from '@/components/UIComponents/Select/createProps'
 
 export interface IProjectConfig {
   projectId: string
   projectName: string
-  childrens: IPageConfig[]
+  children: IPageConfig[]
 }
 
 export interface IPageConfig {
   pageId: string
   pageName: string
   pageRoute: string // 页面路由
-  childrens: IFieldConfig[]
+  children: IFieldConfig[]
 }
 
 export interface IFieldConfig {
@@ -29,9 +30,14 @@ export interface IFieldConfig {
   events: IEvent[]
   styles: CSSProperties
   isFocus: boolean // 是否是被选中状态
+  children: IFieldConfig[] // 嵌套或者插槽元素
 }
 
-export type IFieldProps = IFieldBasicProps | IButtonPropsConfig | IInputPropsConfig
+export type IFieldProps =
+  | IFieldBasicProps
+  | IButtonPropsConfig
+  | IInputPropsConfig
+  | ISelectPropsConfig
 
 export interface IFieldBasicProps {
   isRequired?: boolean | string // 是否必填，true-必填，支持表达式

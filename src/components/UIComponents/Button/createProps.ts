@@ -17,7 +17,7 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
   return [
     {
       groupName: '基础',
-      childrens: {
+      children: {
         buttonText: createInputPropsConfig({
           label: '按钮文字'
         }),
@@ -58,7 +58,7 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
     },
     {
       groupName: '状态',
-      childrens: {
+      children: {
         isHidden: createSwitchPropsConfig({
           label: '隐藏',
           defaultValue: false

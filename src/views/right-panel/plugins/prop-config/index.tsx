@@ -67,10 +67,9 @@ export default defineComponent({
         const propsConfig = uiComponents[currentField.value.type]
         if (propsConfig.props) {
           propsConfig.props.forEach((item) => {
-            console.log('item: ', item)
             formContent.push(
               <el-collapse-item title={item.groupName} name={item.groupName}>
-                {Object.entries(item.childrens).map(([key, config]) => {
+                {Object.entries(item.children).map(([key, config]) => {
                   return fieldPropsRenderer(
                     key as keyof IFieldProps,
                     config as ComponentConfigProps,

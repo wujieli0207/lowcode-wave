@@ -12,7 +12,7 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
   return [
     {
       groupName: '基础',
-      childrens: {
+      children: {
         type: createSelectPropsConfig({
           label: '尺寸',
           options: [
@@ -40,7 +40,7 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
     },
     {
       groupName: '状态',
-      childrens: {
+      children: {
         isRequired: createSwitchPropsConfig({
           label: '必填',
           defaultValue: false

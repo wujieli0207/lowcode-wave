@@ -1,5 +1,5 @@
 import { UI_KV } from '@/constant/componentConstant'
-import { IFieldProps } from './editor'
+import { IFieldConfig, IFieldProps } from './editor'
 
 export interface IUIComponent {
   label: string // 组件标题
@@ -13,6 +13,7 @@ export interface IUIComponent {
 
 export interface IUIComponentRenderParams {
   props: IFieldProps
+  element: IFieldConfig
 }
 
 // 组件支持配置的属性
@@ -31,7 +32,7 @@ export type ComponentConfigProps = {
 // 属性配置分组
 export interface IComponentConfigPropGroup<T> {
   groupName: string
-  childrens: Record<keyof T, ComponentConfigProps>
+  children: Record<keyof T, ComponentConfigProps>
 }
 
 export enum ComponentConfigType {
