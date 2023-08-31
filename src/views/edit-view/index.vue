@@ -12,6 +12,10 @@
             <template v-for="key in element.children" :key="key" #[key]>
               <render-slot-item v-model:children="element.children" :slot-key="key" />
             </template>
+
+            <template v-for="slotItem in element.slots" :key="slotItem.key" #[slotItem.key]>
+              <render-slot-item v-model:children="element.slots" :slot-key="slotItem.key" />
+            </template>
           </render-comp>
         </div>
       </template>

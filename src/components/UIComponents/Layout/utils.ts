@@ -1,5 +1,6 @@
-export interface ILayoutSlotsResult {
-  key: string
+import { ISlots } from '#/editor'
+
+export interface ILayoutSlotsResult extends ISlots {
   span: number // 比例
 }
 
@@ -13,6 +14,7 @@ export function createLayoutSlots(colRadio: string): ILayoutSlotsResult[] {
   colRadio.split(':').forEach((item, index) => {
     result.push({
       key: `slot${index}`,
+      name: `slot${index}`,
       span: Number(item)
     })
   })

@@ -1,11 +1,8 @@
 <template>
-  <draggable-transition-group
-    v-model="slotChildren"
-    v-model:drag="isDrag"
-    :data-slot="`插槽拖拽组件到此处`"
-  >
+  <draggable-transition-group v-model="slotChildren" v-model:drag="isDrag">
     <template #item="{ element: slotElement }">
-      {{ slotElement }}
+      <!-- <render-comp :element="slotElement"> </render-comp> -->
+      <drag-slot :name="slotElement.name" />
     </template>
   </draggable-transition-group>
 </template>
@@ -13,7 +10,8 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { useVModel } from '@vueuse/core'
-import { DraggableTransitionGroup } from '@/components/Drag'
+import { DraggableTransitionGroup, DragSlot } from '@/components/Drag'
+import RenderComp from './RenderComp'
 import { IFieldConfig } from '#/editor'
 
 const props = defineProps({

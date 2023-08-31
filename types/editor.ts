@@ -31,6 +31,7 @@ export interface IFieldConfig {
   styles: CSSProperties
   isFocus: boolean // 是否是被选中状态
   children: IFieldConfig[] // 嵌套或者插槽元素
+  slots?: ISlots[]
 }
 
 export type IFieldProps =
@@ -46,3 +47,9 @@ export interface IFieldBasicProps {
 }
 
 export interface IEvent {}
+
+export interface ISlots {
+  key: string
+  name: string
+  [key: string]: unknown
+}

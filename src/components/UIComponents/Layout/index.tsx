@@ -15,11 +15,16 @@ export default {
       <el-col span={12}>span:12</el-col>
     </el-row>
   ),
-  render: () => {
+  render: ({ element }) => {
     const slots = useSlots()
+
+    if (!element.slots) {
+      element.slots = createLayoutSlots('12:12')
+    }
+
     return (
       <el-row gutter={20}>
-        {createLayoutSlots('12:12').map((item) => {
+        {element.slots.map((item) => {
           return <el-col span={item.span}>{renderSlot(slots, item.key)}</el-col>
         })}
       </el-row>
