@@ -31,10 +31,17 @@ const options = computed(() => {
   return {
     language: 'sql',
     theme: 'vs-light',
+    formatOnType: true,
     formatOnPaste: true,
     automaticLayout: true,
+    selectOnLineNumbers: true,
+    scrollBeyondLastLine: false,
     minimap: {
       enabled: false
+    },
+    folding: true,
+    bracketPairColorization: {
+      enabled: true
     }
   }
 })
