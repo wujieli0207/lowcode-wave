@@ -5,17 +5,11 @@
     </el-header>
 
     <el-container>
-      <el-aside width="400px">
-        <left-panel />
-      </el-aside>
+      <left-panel />
 
-      <el-container>
-        <edit-view />
-      </el-container>
+      <edit-view />
 
-      <el-aside width="400px">
-        <right-panel />
-      </el-aside>
+      <right-panel />
     </el-container>
   </el-container>
 </template>

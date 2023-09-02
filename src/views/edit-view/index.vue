@@ -66,9 +66,12 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
 .edit {
   height: calc(100vh - 50px);
   width: 100%;
+  padding: 0 16px;
+  background: #f2f2f4;
 
   .edit__drag-group {
     height: 100%;
+    background: #fff;
 
     .edit__drag-group__item {
       position: relative;
