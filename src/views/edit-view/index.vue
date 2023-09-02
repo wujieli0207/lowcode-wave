@@ -1,25 +1,28 @@
 <template>
   <div class="edit">
-    {{ jsonConfig }}
-    <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
-      <template #item="{ element }">
-        <div
-          class="edit__drag-group__item"
-          :class="{ focus: element.isFocus }"
-          @mousedown="handleSelectComponent(element)"
-        >
-          <render-comp :element="element">
-            <template v-for="key in element.children" :key="key" #[key]>
-              <render-slot-item v-model:children="element.children" :slot-key="key" />
-            </template>
+    <div class="edit__page-name">页面：{{ currentPage.pageName }}</div>
 
-            <template v-for="slotItem in element.slots" :key="slotItem.key" #[slotItem.key]>
-              <render-slot-item v-model:children="element.slots" :slot-key="slotItem.key" />
-            </template>
-          </render-comp>
-        </div>
-      </template>
-    </draggable-transition-group>
+    <div class="edit_page-content">
+      <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
+        <template #item="{ element }">
+          <div
+            class="edit__drag-group__item"
+            :class="{ focus: element.isFocus }"
+            @mousedown="handleSelectComponent(element)"
+          >
+            <render-comp :element="element">
+              <template v-for="key in element.children" :key="key" #[key]>
+                <render-slot-item v-model:children="element.children" :slot-key="key" />
+              </template>
+
+              <template v-for="slotItem in element.slots" :key="slotItem.key" #[slotItem.key]>
+                <render-slot-item v-model:children="element.slots" :slot-key="slotItem.key" />
+              </template>
+            </render-comp>
+          </div>
+        </template>
+      </draggable-transition-group>
+    </div>
   </div>
 </template>
 
@@ -66,29 +69,44 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
 .edit {
   height: calc(100vh - 50px);
   width: 100%;
-  padding: 0 16px;
-  background: #f2f2f4;
 
-  .edit__drag-group {
-    height: 100%;
+  //
+
+  .edit__page-name {
     background: #fff;
+    height: 40px;
+    margin-left: 16px;
+    border-bottom: 1px solid #e8e9eb;
+    vertical-align: middle;
+    line-height: 40px;
+  }
 
-    .edit__drag-group__item {
-      position: relative;
-      cursor: move;
+  .edit_page-content {
+    height: 100%;
+    padding: 16px;
+    background: #f2f2f4;
 
-      &::before {
-        position: absolute;
-        content: '';
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 1;
-      }
+    .edit__drag-group {
+      background: #fff;
+      height: 100%;
 
-      &.focus {
-        border: 1px solid red;
+      .edit__drag-group__item {
+        position: relative;
+        cursor: move;
+
+        &::before {
+          position: absolute;
+          content: '';
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 1;
+        }
+
+        &.focus {
+          border: 1px solid red;
+        }
       }
     }
   }

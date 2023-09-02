@@ -65,7 +65,7 @@ $--box-shadow: -2px 0 4px 0 rgba(0, 0, 0, 0.1);
 
   &.is-open {
     transform: translateX(0%);
-    min-width: 400px;
+    min-width: 280px;
   }
 
   .right-panel__tabs {
