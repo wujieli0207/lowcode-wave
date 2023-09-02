@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    BasicCodeEditor: typeof import('./src/components/Editor/src/BasicCodeEditor.vue')['default']
     DraggableTransitionGroup: typeof import('./src/components/Drag/src/DraggableTransitionGroup.vue')['default']
     DragSlot: typeof import('./src/components/Drag/src/DragSlot.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -22,6 +23,8 @@ declare module 'vue' {
     ElTabPanel: typeof import('element-plus/es')['ElTabPanel']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    JsonEditor: typeof import('./src/components/Editor/src/JsonEditor.vue')['default']
+    JsonEditro: typeof import('./src/components/Editor/src/JsonEditro.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

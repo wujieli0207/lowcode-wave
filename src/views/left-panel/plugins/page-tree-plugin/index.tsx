@@ -7,6 +7,6 @@ export default defineComponent({
   order: 2,
   icon: Document,
   setup() {
-    return <div>页面层级</div>
+    return () => <div>页面层级</div>
   }
 })
