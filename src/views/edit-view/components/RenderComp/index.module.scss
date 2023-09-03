@@ -1,0 +1,9 @@
+.container {
+  position: relative;
+
+  .feild-toolbar {
+    position: absolute;
+    top: -24px;
+    z-index: 10; // 保证 toolbar 可以选择，10 > 1-编辑器的 z-index
+  }
+}

@@ -19,7 +19,9 @@ import {
   ElCollapse,
   ElCollapseItem,
   ElRow,
-  ElCol
+  ElCol,
+  ElDivider,
+  ElDialog
 } from 'element-plus'
 
 const components = [
@@ -41,7 +43,9 @@ const components = [
   ElCollapse,
   ElCollapseItem,
   ElRow,
-  ElCol
+  ElCol,
+  ElDivider,
+  ElDialog
 ]
 
 export function setupElementPlus(app: App) {

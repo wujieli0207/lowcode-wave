@@ -1,5 +1,5 @@
 <template>
-  <div class="editor" ref="editorRef" :style="getStyles"></div>
+  <div ref="editorRef" :style="getStyles"></div>
 </template>
 
 <script lang="ts" setup>
@@ -33,8 +33,8 @@ const emit = defineEmits(['update:value', 'change'])
 
 const getStyles = computed(() => {
   return {
-    width: props.width,
-    height: props.height
+    width: props.width || '100%',
+    height: props.height || '100%'
   }
 })
 
@@ -66,9 +66,3 @@ onUnmounted(() => {
   }
 })
 </script>
-
-<style scoped lang="scss">
-.editor {
-  height: 100%;
-}
-</style>

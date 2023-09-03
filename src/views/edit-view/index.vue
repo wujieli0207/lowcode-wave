@@ -1,5 +1,6 @@
 <template>
   <div class="edit">
+    {{ currentPage }}
     <div class="edit__page-name">页面：{{ currentPage.pageName }}</div>
 
     <div class="edit_page-content">
@@ -8,9 +9,9 @@
           <div
             class="edit__drag-group__item"
             :class="{ focus: element.isFocus }"
-            @mousedown="handleSelectComponent(element)"
+            @mousedown="(payload) => handleSelectComponent(element, payload)"
           >
-            <render-comp :element="element">
+            <render-comp :element="element" :pageChildren="currentPage.children">
               <template v-for="key in element.children" :key="key" #[key]>
                 <render-slot-item v-model:children="element.children" :slot-key="key" />
               </template>
@@ -35,6 +36,7 @@ import type { IFieldConfig } from '#/editor'
 import { storeToRefs } from 'pinia'
 import { toRefs, ref } from 'vue'
 import type { Ref } from 'vue'
+import { isEqual } from 'lodash-es'
 
 let prevSelectComponent: Ref<Nullable<IFieldConfig>> = ref(null)
 
@@ -45,7 +47,13 @@ const { currentPage } = toRefs(jsonConfig.value)
 
 const { setCurrentFiled } = jsonConfigStore
 
-function handleSelectComponent(element: IFieldConfig) {
+function handleSelectComponent(element: IFieldConfig, payload) {
+  // 如果不是 div 元素，说明点击的是 toolbar 的操作按钮，一般是 svg，不需要处理
+  console.log('test', !(payload.target instanceof HTMLDivElement))
+  if (!(payload.target instanceof HTMLDivElement)) {
+    return
+  }
+
   setCurrentFiled(element)
   handleSetFocus(element, prevSelectComponent)
 
@@ -57,9 +65,10 @@ function handleSelectComponent(element: IFieldConfig) {
  * @description 设置组件是否被选中，pure
  */
 function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable<IFieldConfig>>) {
-  element.isFocus = true
-
-  if (prevSelectComponent.value) {
+  // 如果两个 id 相同，说明是同一个组件，直接取反
+  // 如果两个 id 不同，说明是不同组件，需要把上一个组件的 isFocus 设置为 false
+  element.isFocus = !element.isFocus
+  if (prevSelectComponent.value && prevSelectComponent.value._id !== element._id) {
     prevSelectComponent.value.isFocus = false
   }
 }
@@ -83,7 +92,7 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
 
   .edit_page-content {
     height: 100%;
-    padding: 16px;
+    padding: 24px 16px;
     background: #f2f2f4;
 
     .edit__drag-group {

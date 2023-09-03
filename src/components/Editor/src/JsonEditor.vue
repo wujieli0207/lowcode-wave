@@ -1,5 +1,11 @@
 <template>
-  <basic-code-editor :value="editorValue" :options="options" @change="handleChange" />
+  <basic-code-editor
+    :value="editorValue"
+    :options="options"
+    :width="width"
+    :height="height"
+    @change="handleChange"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -20,6 +26,14 @@ self.MonacoEnvironment = {
 
 const props = defineProps({
   value: {
+    type: String,
+    default: ''
+  },
+  width: {
+    type: String,
+    default: ''
+  },
+  height: {
     type: String,
     default: ''
   }
