@@ -12,7 +12,8 @@ export interface IUIComponent {
 }
 
 export interface IUIComponentRenderParams {
-  props: IFieldProps
+  props: IFieldConfig['props']
+  styles: IFieldConfig['styles']
   element: IFieldConfig
 }
 

@@ -16,7 +16,7 @@ export function cloneFieldInstance(fieldElement: IUIComponent): IFieldConfig {
     value: '',
     props: {},
     events: [],
-    styles: {},
+    styles: _createDefaultStyles(),
     isFocus: false,
     children: []
   }
@@ -54,4 +54,19 @@ export function getGroupComponentsByTag(tagObj: typeof UI_TAG_VL, componentsList
   })
 
   return result
+}
+
+function _createDefaultStyles() {
+  return {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    paddingTop: '0',
+    paddingBottom: '0',
+    paddingLeft: '0',
+    paddingRight: '0',
+    marginTop: '0',
+    marginBottom: '0',
+    marginLeft: '0',
+    marginRight: '0'
+  }
 }

@@ -21,7 +21,9 @@ import {
   ElRow,
   ElCol,
   ElDivider,
-  ElDialog
+  ElDialog,
+  ElRadioGroup,
+  ElRadioButton
 } from 'element-plus'
 
 const components = [
@@ -45,7 +47,9 @@ const components = [
   ElRow,
   ElCol,
   ElDivider,
-  ElDialog
+  ElDialog,
+  ElRadioGroup,
+  ElRadioButton
 ]
 
 export function setupElementPlus(app: App) {

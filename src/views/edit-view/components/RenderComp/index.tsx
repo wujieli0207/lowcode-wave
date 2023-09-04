@@ -29,6 +29,7 @@ export default defineComponent({
           <div>
             {uiComponents[props.element.type].render({
               props: props.element.props || {},
+              styles: props.element.styles || {},
               element: props.element
             })}
           </div>

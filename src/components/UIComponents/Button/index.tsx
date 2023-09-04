@@ -9,9 +9,12 @@ export default {
   isBasic: true,
   tags: [UI_TAG_KV.BASE],
   preview: () => <el-button>提交</el-button>,
-  render: (params) => {
-    const { props } = params
-    return <el-button {...props}>{(props as IButtonPropsConfig).buttonText || '按钮'}</el-button>
+  render: ({ props, styles }) => {
+    return (
+      <div style={styles}>
+        <el-button {...props}>{(props as IButtonPropsConfig).buttonText || '按钮'}</el-button>
+      </div>
+    )
   },
   props: createProps()
 } as IUIComponent
