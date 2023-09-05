@@ -13,7 +13,6 @@ import { ElButton, ElDialog } from 'element-plus'
 
 interface IModalOptions {
   title?: string
-  footer?: null | (() => JSX.Element)
   content: ComponentInternalInstance | (() => JSX.Element)
   onComfirm?: () => void
   onCancel?: () => void
@@ -51,12 +50,14 @@ const Modal = defineComponent({
 
     const handlder = {
       onComfirm: () => {
-        getOptions.value.onComfirm?.()
-        methods.hide()
+        if (getOptions.value.onComfirm?.()) {
+          methods.hide()
+        }
       },
       onCancel: () => {
-        getOptions.value.onCancel?.()
-        methods.hide()
+        if (getOptions.value.onCancel?.()) {
+          methods.hide()
+        }
       }
     }
 
@@ -71,15 +72,16 @@ const Modal = defineComponent({
             ) : isFunction(getOptions.value.content) ? (
               getOptions.value.content()
             ) : null,
-          footer: () =>
-            !getOptions.value.footer ? null : (
-              <div>
-                <ElButton onClick={handlder.onCancel}>取消</ElButton>
+          footer: () => (
+            <>
+              {getOptions.value.onCancel && <ElButton onClick={handlder.onCancel}>取消</ElButton>}
+              {getOptions.value.onComfirm && (
                 <ElButton type="primary" onClick={handlder.onComfirm}>
                   确定
                 </ElButton>
-              </div>
-            )
+              )}
+            </>
+          )
         }}
       </ElDialog>
     )

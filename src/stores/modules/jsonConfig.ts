@@ -24,8 +24,19 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     jsonConfig.currentField = field
   }
 
+  // ========== page 相关操作 =========
+  function updatePage(page: IPageConfig) {
+    jsonConfig.currentPage = page
+  }
+
+  function clearPage() {
+    jsonConfig.currentPage.children = []
+  }
+
   return {
     jsonConfig,
-    setCurrentFiled
+    setCurrentFiled,
+    updatePage,
+    clearPage
   }
 })

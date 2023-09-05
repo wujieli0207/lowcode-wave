@@ -23,7 +23,8 @@ import {
   ElDivider,
   ElDialog,
   ElRadioGroup,
-  ElRadioButton
+  ElRadioButton,
+  ElAlert
 } from 'element-plus'
 
 const components = [
@@ -49,7 +50,8 @@ const components = [
   ElDivider,
   ElDialog,
   ElRadioGroup,
-  ElRadioButton
+  ElRadioButton,
+  ElAlert
 ]
 
 export function setupElementPlus(app: App) {

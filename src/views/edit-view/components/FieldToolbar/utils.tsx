@@ -10,10 +10,13 @@ import { JsonEditor } from '@/components/Editor'
  * @description 通过 Modal 查看节点 json
  */
 export function handleViewJson(element: IFieldConfig) {
-  console.log(element)
   useModal({
     title: '节点信息',
-    content: () => <JsonEditor value={JSON.stringify(element, null, 2)} height="300px" />
+    content: () => (
+      <>
+        <JsonEditor value={JSON.stringify(element, null, 2)} height="300px" />
+      </>
+    )
   })
 }
 

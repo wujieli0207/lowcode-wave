@@ -1,14 +1,13 @@
-import {
-  CopyDocument,
-  Delete,
-  Download,
-  RefreshLeft,
-  RefreshRight,
-  Upload
-} from '@element-plus/icons-vue'
+import { Delete, Download, RefreshLeft, RefreshRight, Upload } from '@element-plus/icons-vue'
 import { defineComponent, toRefs } from 'vue'
 import styles from './index.module.scss'
-import { handleExportJSON } from './utils'
+import {
+  handleClearPage,
+  handleExportJSON,
+  handleImportJSON,
+  handleRedo,
+  handleUndo
+} from './utils'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { storeToRefs } from 'pinia'
 
@@ -27,27 +26,12 @@ export default defineComponent({
           {
             label: '撤销',
             icon: RefreshLeft,
-            click: () => {}
+            click: () => handleUndo(currentPage.value)
           },
           {
             label: '重做',
             icon: RefreshRight,
-            click: () => {}
-          }
-        ]
-      },
-      {
-        groupName: '扩展操作',
-        list: [
-          {
-            label: '清空页面',
-            icon: Delete,
-            click: () => {}
-          },
-          {
-            label: '复制页面',
-            icon: CopyDocument,
-            click: () => {}
+            click: () => handleRedo(currentPage.value)
           }
         ]
       },
@@ -55,9 +39,14 @@ export default defineComponent({
         groupName: '更多操作',
         list: [
           {
+            label: '清空页面',
+            icon: Delete,
+            click: () => handleClearPage()
+          },
+          {
             label: '导入JSON',
             icon: Upload,
-            click: () => {}
+            click: () => handleImportJSON(currentPage.value)
           },
           {
             label: '导出JSON',
