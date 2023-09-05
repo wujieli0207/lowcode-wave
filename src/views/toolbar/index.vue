@@ -1,19 +1,24 @@
 <template>
   <div class="toolbar">
     <div class="toolbar__title">
-      <h2>Toolbar</h2>
+      <h2>LowcodeWave</h2>
     </div>
 
-    <div>
-      <el-button type="primary" @click="handlePreview">预览</el-button>
+    <!-- 中间操作按钮 -->
+    <div class="toolbar__handle">
+      <ToolbarHandle />
+    </div>
+
+    <!-- 右侧编辑按钮 -->
+    <div class="toolbar__action">
+      <toolbar-action />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-function handlePreview() {
-  console.log('待实现: ')
-}
+import ToolbarHandle from './components/ToolbarHandle'
+import ToolbarAction from './components/ToolbarAction'
 </script>
 
 <style scoped lang="scss">

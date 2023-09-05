@@ -36,7 +36,6 @@ import type { IFieldConfig } from '#/editor'
 import { storeToRefs } from 'pinia'
 import { toRefs, ref } from 'vue'
 import type { Ref } from 'vue'
-import { isEqual } from 'lodash-es'
 
 let prevSelectComponent: Ref<Nullable<IFieldConfig>> = ref(null)
 
