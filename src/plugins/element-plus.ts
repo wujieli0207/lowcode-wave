@@ -24,7 +24,9 @@ import {
   ElDialog,
   ElRadioGroup,
   ElRadioButton,
-  ElAlert
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 } from 'element-plus'
 
 const components = [
@@ -51,7 +53,9 @@ const components = [
   ElDialog,
   ElRadioGroup,
   ElRadioButton,
-  ElAlert
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 ]
 
 export function setupElementPlus(app: App) {

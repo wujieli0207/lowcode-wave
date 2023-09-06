@@ -59,3 +59,33 @@ export function handleDelete(element: IFieldConfig, pageChildren: IPageConfig['c
     1
   )
 }
+
+/**
+ * @description 向前移动节点
+ */
+export function handleMoveUp(element: IFieldConfig, pageChildren: IPageConfig['children']) {
+  const currentIndex = pageChildren.findIndex((item) => item._id === element._id)
+
+  if (currentIndex === 0) {
+    return
+  }
+
+  const prevElement = pageChildren[currentIndex - 1]
+  pageChildren[currentIndex - 1] = element
+  pageChildren[currentIndex] = prevElement
+}
+
+/**
+ * @description 向后移动节点
+ */
+export function handleMoveDown(element: IFieldConfig, pageChildren: IPageConfig['children']) {
+  const currentIndex = pageChildren.findIndex((item) => item._id === element._id)
+
+  if (currentIndex === pageChildren.length - 1) {
+    return
+  }
+
+  const nextElement = pageChildren[currentIndex + 1]
+  pageChildren[currentIndex + 1] = element
+  pageChildren[currentIndex] = nextElement
+}

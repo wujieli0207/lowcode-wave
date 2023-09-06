@@ -12,7 +12,17 @@
   width: 100% !important;
 }
 
-// ======== input =========
+// ========== input ==========
 .el-input-number {
   width: 100% !important;
+}
+
+// ========== dropdown ==========
+// 移除 dropdown 默认样式
+.el-dropdown {
+  display: inherit !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  vertical-align: inherit !important;
 }

@@ -1,9 +1,11 @@
 import { PropType, defineComponent } from 'vue'
-import { ZoomIn, More, ArrowLeft, ArrowRight, Delete } from '@element-plus/icons-vue'
+import { More } from '@element-plus/icons-vue'
 import { IFieldConfig, IPageConfig } from '#/editor'
 import { UI_VL } from '@/constant/componentConstant'
+import { defaultActions, moreActions } from './actions'
 import styles from './index.module.scss'
-import { handleDelete, handleInsertBefore, handleInsertAfter, handleViewJson } from './utils'
+
+import { isFunction } from 'lodash-es'
 
 export default defineComponent({
   name: 'FieldToolbar',
@@ -18,37 +20,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const defaultActions = [
-      {
-        name: '查看节点',
-        click: (element: IFieldConfig) => {
-          handleViewJson(element)
-        },
-        icon: ZoomIn
-      },
-      {
-        name: '向前插入节点',
-        click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-          handleInsertBefore(element, pageChildren)
-        },
-        icon: ArrowLeft
-      },
-      {
-        name: '向后插入节点',
-        click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-          handleInsertAfter(element, pageChildren)
-        },
-        icon: ArrowRight
-      },
-      {
-        name: '删除节点',
-        click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-          handleDelete(element, pageChildren)
-        },
-        icon: Delete
-      }
-    ]
-
     return () => {
       return (
         <div class={styles['field-toolbar']}>
@@ -78,9 +49,38 @@ export default defineComponent({
 
               {/* 更多操作 */}
               <div class={styles['field-toolbar__action']}>
-                <el-icon>
-                  <More />
-                </el-icon>
+                <el-tooltip content="更多">
+                  <el-dropdown trigger="click">
+                    {{
+                      default: () => (
+                        <el-icon>
+                          <More />
+                        </el-icon>
+                      ),
+                      dropdown: () => (
+                        <el-dropdown-menu>
+                          {moreActions.map((action) => {
+                            return (
+                              <el-dropdown-item
+                                disabled={
+                                  isFunction(action.disabled)
+                                    ? action.disabled(props.element, props.pageChildren)
+                                    : action.disabled
+                                }
+                                divided={action.divided}
+                                onClick={() => action.click(props.element, props.pageChildren)}
+                              >
+                                <span class={action.highlight ? styles['highlight'] : ''}>
+                                  {action.name}
+                                </span>
+                              </el-dropdown-item>
+                            )
+                          })}
+                        </el-dropdown-menu>
+                      )
+                    }}
+                  </el-dropdown>
+                </el-tooltip>
               </div>
             </div>
           </div>

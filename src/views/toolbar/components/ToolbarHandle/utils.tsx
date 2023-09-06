@@ -3,7 +3,7 @@ import { JsonEditor } from '@/components/Editor'
 import { useModal } from '@/hooks/useModal'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { useClipboard } from '@vueuse/core'
-import { ElNotification, ElAlert } from 'element-plus'
+import { ElNotification, ElAlert, ElMessage } from 'element-plus'
 import { ref } from 'vue'
 
 /**
@@ -12,6 +12,10 @@ import { ref } from 'vue'
  */
 export function handleUndo(currentPage: IPageConfig) {
   console.log('handleUndo 待实现: ', currentPage)
+  ElMessage({
+    message: '请期待',
+    type: 'info'
+  })
 }
 
 /**
@@ -20,6 +24,10 @@ export function handleUndo(currentPage: IPageConfig) {
  */
 export function handleRedo(currentPage: IPageConfig) {
   console.log('handleRedo 待实现: ', currentPage)
+  ElMessage({
+    message: '请期待',
+    type: 'info'
+  })
 }
 
 /**
