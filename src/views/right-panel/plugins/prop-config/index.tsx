@@ -64,9 +64,9 @@ export default defineComponent({
         )
 
         // 引入配置 props
-        const propsConfig = uiComponents[currentField.value.type]
-        if (propsConfig.props) {
-          propsConfig.props.forEach((item) => {
+        const fieldConfig = uiComponents[currentField.value.type]
+        if (fieldConfig.props) {
+          fieldConfig.props.forEach((item) => {
             formContent.push(
               <el-collapse-item title={item.groupName} name={item.groupName}>
                 {Object.entries(item.children).map(([key, config]) => {
