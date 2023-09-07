@@ -1,5 +1,5 @@
 import { UI_KV } from '@/constant/componentConstant'
-import { IFieldConfig, IFieldProps } from './editor'
+import { IEvent, IFieldConfig, IFieldProps } from './editor'
 
 export interface IUIComponent {
   label: string // 组件标题
@@ -9,6 +9,7 @@ export interface IUIComponent {
   preview: () => JSX.Element // 预览
   render: (params: IUIComponentRenderParams) => JSX.Element // 渲染
   props: IComponentConfigPropGroup<IFieldProps>[] // 组件支持配置的属性
+  events?: IEvent[]
 }
 
 export interface IUIComponentRenderParams {

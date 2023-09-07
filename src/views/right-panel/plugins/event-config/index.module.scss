@@ -1,0 +1,17 @@
+.event-config-panel {
+  margin: 0 8px;
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .event-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .event-header__icon {
+      margin-left: 8px;
+    }
+  }
+}

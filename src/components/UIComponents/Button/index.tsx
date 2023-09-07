@@ -1,5 +1,5 @@
 import { IUIComponent } from '#/components'
-
+import { EVENT_KV } from '@/constant/eventConstant'
 import { UI_KV, UI_VL, UI_TAG_KV } from '@/constant/componentConstant'
 import { IButtonPropsConfig, createProps } from './createProps'
 
@@ -16,5 +16,13 @@ export default {
       </div>
     )
   },
-  props: createProps()
+  props: createProps(),
+  events: [
+    {
+      type: EVENT_KV.CLICK
+    },
+    {
+      type: EVENT_KV.CHANGE
+    }
+  ]
 } as IUIComponent

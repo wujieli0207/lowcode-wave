@@ -6,6 +6,7 @@ import type { CSSProperties } from 'vue'
 import { IButtonPropsConfig } from '@/components/UIComponents/Button/createProps'
 import { IInputPropsConfig } from '@/components/UIComponents/Input/createProps'
 import { ISelectPropsConfig } from '@/components/UIComponents/Select/createProps'
+import { EVENT_KV } from '@/constant/eventConstant'
 
 export interface IProjectConfig {
   projectId: string
@@ -46,7 +47,10 @@ export interface IFieldBasicProps {
   isDisabled?: boolean | string // 是否禁用，true-禁用，支持表达式
 }
 
-export interface IEvent {}
+export interface IEvent {
+  type: ValueOf<typeof EVENT_KV>
+  args: Record<string, unknown>
+}
 
 export interface ISlots {
   key: string
