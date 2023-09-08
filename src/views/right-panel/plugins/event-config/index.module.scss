@@ -15,3 +15,42 @@
     }
   }
 }
+
+// 事件编辑弹窗
+.edit-event {
+  display: flex;
+  border: 1px solid #e8e8e8;
+
+  .edit-event__title {
+    margin-bottom: 16px;
+    font-size: 14px;
+  }
+
+  .edit-event__list {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+
+    .edit-event__list__filter {
+      padding: 16px 8px;
+    }
+
+    .edit-event__list__operation {
+      padding: 8px;
+
+      .edit-event__list__operation__item {
+        padding: 0 8px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #f0f0f0;
+        }
+      }
+    }
+  }
+
+  .edit-event__config {
+    padding: 16px 8px;
+    border-left: 1px solid #e8e8e8;
+  }
+}

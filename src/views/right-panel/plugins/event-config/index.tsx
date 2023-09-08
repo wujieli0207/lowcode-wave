@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 import uiComponents from '@/components/UIComponents'
 import { EVENT_VL } from '@/constant/eventConstant'
 import { isArray } from 'lodash-es'
-import { handleAddEvent, handleDeleteEvent } from './utils'
+import { handleAddEvent, handleDeleteEvent, handleEditEvent } from './utils'
 import { Plus, Delete } from '@element-plus/icons-vue'
 import { IEvent, IFieldConfig } from '#/editor'
 
@@ -21,7 +21,9 @@ export default defineComponent({
       {
         tips: '新增事件',
         icon: Plus,
-        click: () => {}
+        click: (field: IFieldConfig, event: IEvent) => {
+          handleEditEvent(field, event)
+        }
       },
       {
         tips: '删除事件',
@@ -34,6 +36,7 @@ export default defineComponent({
 
     return (
       <div class={styles['event-config-panel']}>
+        <el-button onClick={handleEditEvent}>test</el-button>
         {/* 添加事件 */}
         <el-dropdown trigger="click">
           {{
@@ -54,7 +57,7 @@ export default defineComponent({
                         disabled={currentField.value?.events?.some(
                           (item) => item.type === event.type
                         )}
-                        onClick={() => handleAddEvent(currentField.value!, event)}
+                        onClick={(event) => handleAddEvent(currentField.value!, event)}
                       >
                         {EVENT_VL[event.type]}
                       </el-dropdown-item>
@@ -82,7 +85,10 @@ export default defineComponent({
                             <el-tooltip content={action.tips} placement="top">
                               <el-icon
                                 class={styles['event-header__icon']}
-                                onClick={() => action.click(currentField.value!, event)}
+                                onClick={(e) => {
+                                  action.click(currentField.value!, event)
+                                  e.stopPropagation()
+                                }}
                               >
                                 <action.icon />
                               </el-icon>
