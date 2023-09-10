@@ -13,6 +13,10 @@
         <slot name="item" v-bind="item"></slot>
       </div>
     </template>
+
+    <template #header>
+      <slot name="header"></slot>
+    </template>
   </Draggable>
 </template>
 

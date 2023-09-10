@@ -6,18 +6,23 @@
     <div class="edit_page-content">
       <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
         <template #item="{ element }">
+          <!-- 非容器组件，需要添加遮罩避免点击组件 -->
           <div
             class="edit__drag-group__item"
-            :class="{ focus: element.isFocus }"
+            :class="{
+              focus: element.isFocus,
+              overlay: !getIsContainerComponent(element)
+            }"
             @mousedown="(payload) => handleSelectComponent(element, payload)"
           >
             <render-comp :element="element" :pageChildren="currentPage.children">
-              <template v-for="key in element.children" :key="key" #[key]>
-                <render-slot-item v-model:children="element.children" :slot-key="key" />
-              </template>
-
-              <template v-for="slotItem in element.slots" :key="slotItem.key" #[slotItem.key]>
-                <render-slot-item v-model:children="element.slots" :slot-key="slotItem.key" />
+              <template #default>
+                <render-slot-item
+                  v-model:children="element.children"
+                  :pageChildren="currentPage.children"
+                  slot-key="default"
+                  :select-component-fn="handleSelectComponent"
+                />
               </template>
             </render-comp>
           </div>
@@ -36,6 +41,7 @@ import type { IFieldConfig } from '#/editor'
 import { storeToRefs } from 'pinia'
 import { toRefs, ref } from 'vue'
 import type { Ref } from 'vue'
+import { getIsContainerComponent } from './utils'
 
 let prevSelectComponent: Ref<Nullable<IFieldConfig>> = ref(null)
 
@@ -46,9 +52,8 @@ const { currentPage } = toRefs(jsonConfig.value)
 
 const { setCurrentFiled } = jsonConfigStore
 
-function handleSelectComponent(element: IFieldConfig, payload) {
+function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   // 如果不是 div 元素，说明点击的是 toolbar 的操作按钮，一般是 svg，不需要处理
-  console.log('test', !(payload.target instanceof HTMLDivElement))
   if (!(payload.target instanceof HTMLDivElement)) {
     return
   }
@@ -74,11 +79,11 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
 </script>
 
 <style scoped lang="scss">
+@import './styles/index.scss';
+
 .edit {
   height: calc(100vh - 50px);
   width: 100%;
-
-  //
 
   .edit__page-name {
     background: #fff;
@@ -97,25 +102,6 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
     .edit__drag-group {
       background: #fff;
       height: 100%;
-
-      .edit__drag-group__item {
-        position: relative;
-        cursor: move;
-
-        &::before {
-          position: absolute;
-          content: '';
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 1;
-        }
-
-        &.focus {
-          border: 1px solid red;
-        }
-      }
     }
   }
 }

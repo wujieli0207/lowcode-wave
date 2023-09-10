@@ -38,6 +38,14 @@ export function handleEditEvent(field: IFieldConfig, event: IEvent) {
     selectedOperation.value.isFocus = true
   }
 
+  function handleReset() {
+    if (selectedOperation.value) {
+      selectedOperation.value.isFocus = false
+    }
+    selectedOperation.value = null
+    prevSelectedOperation.value = null
+  }
+
   const selectedOperation = ref<Nullable<Ioperation>>() // 当前选中操作
   const prevSelectedOperation = ref<Nullable<Ioperation>>() // 前一个选中操作
 
@@ -104,9 +112,11 @@ export function handleEditEvent(field: IFieldConfig, event: IEvent) {
       )
     },
     onComfirm: () => {
+      handleReset()
       return true
     },
     onCancel: () => {
+      handleReset()
       return true
     }
   })

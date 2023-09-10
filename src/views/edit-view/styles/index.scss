@@ -1,0 +1,18 @@
+.edit__drag-group__item {
+  position: relative;
+  cursor: move;
+
+  &.overlay::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  &.focus {
+    border: 1px solid red;
+  }
+}

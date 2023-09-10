@@ -8,6 +8,7 @@ export const { UI_KV, UI_VL } = defineConstants(
     { key: 'INPUT', value: 'input', label: '输入框' },
     { key: 'BUTTON', value: 'button', label: '按钮' },
     { key: 'SELECT', value: 'select', label: '下拉选择' },
+    { key: 'FORM', value: 'form', label: '表单容器' },
     { key: 'LAYOUT', value: 'layout', label: '分栏布局' }
   ] as const,
   'UI'
