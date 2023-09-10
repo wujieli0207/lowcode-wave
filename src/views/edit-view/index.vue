@@ -1,7 +1,8 @@
 <template>
   <div class="edit">
-    {{ currentPage }}
-    <div class="edit__page-name">页面：{{ currentPage.pageName }}</div>
+    <div class="edit__page-name">
+      <editor-header />
+    </div>
 
     <div class="edit_page-content">
       <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
@@ -33,24 +34,22 @@
 </template>
 
 <script lang="ts" setup>
+import { toRefs } from 'vue'
+import { storeToRefs } from 'pinia'
 import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './components/RenderComp'
 import RenderSlotItem from './components/RenderSlotItem.vue'
+import EditorHeader from './components/EditorHeader'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import type { IFieldConfig } from '#/editor'
-import { storeToRefs } from 'pinia'
-import { toRefs, ref } from 'vue'
-import type { Ref } from 'vue'
 import { getIsContainerComponent } from './utils'
-
-let prevSelectComponent: Ref<Nullable<IFieldConfig>> = ref(null)
 
 const jsonConfigStore = useJsonConfigStore()
 
 const { jsonConfig } = storeToRefs(jsonConfigStore)
 const { currentPage } = toRefs(jsonConfig.value)
 
-const { setCurrentFiled } = jsonConfigStore
+const { setCurrentFiled, handleSetFocus } = jsonConfigStore
 
 function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   // 如果不是 div 元素，说明点击的是 toolbar 的操作按钮，一般是 svg，不需要处理
@@ -59,22 +58,7 @@ function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   }
 
   setCurrentFiled(element)
-  handleSetFocus(element, prevSelectComponent)
-
-  prevSelectComponent.value = element
-}
-
-/**
- *
- * @description 设置组件是否被选中，pure
- */
-function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable<IFieldConfig>>) {
-  // 如果两个 id 相同，说明是同一个组件，直接取反
-  // 如果两个 id 不同，说明是不同组件，需要把上一个组件的 isFocus 设置为 false
-  element.isFocus = !element.isFocus
-  if (prevSelectComponent.value && prevSelectComponent.value._id !== element._id) {
-    prevSelectComponent.value.isFocus = false
-  }
+  handleSetFocus(element)
 }
 </script>
 
@@ -86,12 +70,12 @@ function handleSetFocus(element: IFieldConfig, prevSelectComponent: Ref<Nullable
   width: 100%;
 
   .edit__page-name {
+    display: flex;
+    align-items: center;
     background: #fff;
     height: 40px;
     margin-left: 16px;
     border-bottom: 1px solid #e8e9eb;
-    vertical-align: middle;
-    line-height: 40px;
   }
 
   .edit_page-content {

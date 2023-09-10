@@ -26,7 +26,9 @@ import {
   ElRadioButton,
   ElDropdown,
   ElDropdownMenu,
-  ElDropdownItem
+  ElDropdownItem,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 } from 'element-plus'
 
 const components = [
@@ -55,7 +57,9 @@ const components = [
   ElRadioButton,
   ElDropdown,
   ElDropdownMenu,
-  ElDropdownItem
+  ElDropdownItem,
+  ElBreadcrumb,
+  ElBreadcrumbItem
 ]
 
 export function setupElementPlus(app: App) {
