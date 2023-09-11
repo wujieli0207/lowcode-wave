@@ -4,7 +4,9 @@ import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import styles from './index.module.scss'
 
 export default defineComponent({
-  name: 'StyleConfig',
+  key: 'StyleConfigPlugin',
+  label: '样式',
+  order: 2,
   setup() {
     const activeCollapse = ref('general')
 

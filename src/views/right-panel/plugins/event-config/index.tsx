@@ -10,7 +10,9 @@ import { Plus, Delete } from '@element-plus/icons-vue'
 import { IEvent, IFieldConfig } from '#/editor'
 
 export default defineComponent({
-  name: 'EventConfig',
+  key: 'EventConfigPlugin',
+  label: '事件',
+  order: 3,
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 

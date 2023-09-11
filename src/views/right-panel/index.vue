@@ -9,12 +9,12 @@
 
     <el-tabs v-model="activeTab" class="right-panel__tabs">
       <el-tab-pane
-        v-for="item in RightPanel"
-        :key="item.value"
-        :label="item.label"
-        :name="item.value"
+        v-for="plugin in pluginsList"
+        :key="plugin.key"
+        :name="plugin.key"
+        :label="plugin.label"
       >
-        <component :is="item.component.setup" />
+        <component :is="plugin.setup()" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -23,29 +23,11 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { DArrowLeft, DArrowRight } from '@element-plus/icons-vue'
-import PropConfig from './plugins/prop-config'
-import StyleConfig from './plugins/style-config'
-import EventConfig from './plugins/event-config'
+import plugins from './plugins'
 
-const RightPanel = [
-  {
-    label: '属性',
-    value: 'prop',
-    component: PropConfig
-  },
-  {
-    label: '样式',
-    value: 'style',
-    component: StyleConfig
-  },
-  {
-    label: '事件',
-    value: 'event',
-    component: EventConfig
-  }
-]
+const pluginsList = Object.values(plugins).sort((a, b) => a.order - b.order)
+const activeTab = ref(pluginsList[0].key)
 
-const activeTab = ref(RightPanel[0].value)
 const isRightPanelOpen = ref(true)
 
 function handleClickFloatBtn() {

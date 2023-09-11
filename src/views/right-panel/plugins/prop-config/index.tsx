@@ -6,16 +6,19 @@ import { IFieldProps } from '#/editor'
 import { ComponentConfigProps, ComponentConfigType } from '#/components'
 import styles from './index.module.scss'
 import { BasicHelp } from '@/components/Basic'
+import { initActiveCollapse } from './utils'
 
 export default defineComponent({
-  name: 'PropConfig',
+  key: 'PropConfigPlugin',
+  label: '属性',
+  order: 1,
   setup() {
-    const activeCollapse = ref('general')
-
     const jsonConfigStore = useJsonConfigStore()
 
     const { jsonConfig } = storeToRefs(jsonConfigStore)
     const { currentField } = toRefs(jsonConfig.value)
+
+    const activeCollapse = ref(initActiveCollapse(currentField.value))
 
     const fieldPropsRenderer = (
       propKey: keyof IFieldProps,
@@ -111,6 +114,6 @@ export default defineComponent({
       )
     }
 
-    return <FormRenderer />
+    return FormRenderer
   }
 })
