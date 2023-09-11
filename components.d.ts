@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BasicCodeEditor: typeof import('./src/components/Editor/src/BasicCodeEditor.vue')['default']
+    BasicHelp: typeof import('./src/components/Basic/src/BasicHelp.vue')['default']
     DraggableTransitionGroup: typeof import('./src/components/Drag/src/DraggableTransitionGroup.vue')['default']
     DragSlot: typeof import('./src/components/Drag/src/DragSlot.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']

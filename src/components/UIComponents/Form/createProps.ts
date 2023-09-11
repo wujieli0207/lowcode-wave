@@ -1,7 +1,7 @@
 import { IComponentConfigPropGroup } from '#/components'
 import { IFieldProps } from '#/editor'
 import {
-  createInputNumberPropsConfig,
+  createInputPropsConfig,
   createSelectPropsConfig,
   createSwitchPropsConfig
 } from '@/utils/ui-components'
@@ -17,44 +17,147 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
     {
       groupName: '基础',
       children: {
-        type: createSelectPropsConfig({
-          label: '输入框类型',
+        inline: createSwitchPropsConfig({
+          label: '行内表单模式',
+          defaultValue: false
+        }),
+        labelPosition: createSelectPropsConfig({
+          label: '标签的位置',
           options: [
             {
-              label: '单行文本',
-              value: 'text'
+              label: 'left',
+              value: 'left'
             },
             {
-              label: '多行文本',
-              value: 'textarea'
+              label: 'right',
+              value: 'right'
             },
             {
-              label: '密码',
-              value: 'password'
+              label: 'top',
+              value: 'top'
+            }
+          ],
+          tips: '当设置为 left 或 right 时，则也需要设置 label-width 属性'
+        }),
+        labelWidth: createInputPropsConfig({
+          label: '标签长度',
+          tips: '例如 50px。 作为 Form 直接子元素的 form-item 会继承该值。 可以使用 auto'
+        }),
+        labelSuffix: createInputPropsConfig({
+          label: '表单域标签后缀'
+        }),
+        hideRequiredAsterisk: createSwitchPropsConfig({
+          label: '隐藏必填星号',
+          defaultValue: false
+        }),
+        requireAsteriskPosition: createSelectPropsConfig({
+          label: '必填星号的位置',
+          options: [
+            {
+              label: 'left',
+              value: 'left'
+            },
+            {
+              label: 'right',
+              value: 'right'
             }
           ]
         }),
-        maxlength: createInputNumberPropsConfig({
-          label: '最大长度'
+        showMessage: createSwitchPropsConfig({
+          label: '显示校验错误信息',
+          defaultValue: true
         }),
-        minlength: createInputNumberPropsConfig({
-          label: '最小长度'
+        inlineMessage: createSwitchPropsConfig({
+          label: '行内形式展示校验信息',
+          defaultValue: false
+        }),
+        statusIcon: createSwitchPropsConfig({
+          label: '输入框显示校验结果反馈图标',
+          defaultValue: false
+        }),
+        validateOnRuleChange: createSwitchPropsConfig({
+          label: 'rules属性改变后立即触发验证',
+          defaultValue: true
+        }),
+        size: createSelectPropsConfig({
+          label: '表单内组件尺寸',
+          options: [
+            {
+              label: '',
+              value: ''
+            },
+            {
+              label: '默认',
+              value: '默认'
+            },
+            {
+              label: 'large',
+              value: 'large'
+            },
+            {
+              label: 'small',
+              value: 'small'
+            }
+          ]
+        }),
+        disabled: createSwitchPropsConfig({
+          label: '禁用表单内所有组件',
+          defaultValue: false,
+          tips: '如果设置为 true, 它将覆盖内部组件的 disabled 属性'
+        }),
+        scrollToError: createSwitchPropsConfig({
+          label: '校验失败滚动到第一个错误项',
+          defaultValue: false
+        }),
+        size1: createSelectPropsConfig({
+          label: '表单内组件尺寸',
+          options: [
+            {
+              label: '',
+              value: ''
+            },
+            {
+              label: '默认',
+              value: '默认'
+            },
+            {
+              label: 'large',
+              value: 'large'
+            },
+            {
+              label: 'small',
+              value: 'small'
+            }
+          ]
+        }),
+        size2: createSelectPropsConfig({
+          label: '表单内组件尺寸',
+          options: [
+            {
+              label: '',
+              value: ''
+            },
+            {
+              label: '默认',
+              value: '默认'
+            },
+            {
+              label: 'large',
+              value: 'large'
+            },
+            {
+              label: 'small',
+              value: 'small'
+            }
+          ]
         })
       }
     },
     {
       groupName: '状态',
       children: {
-        isRequired: createSwitchPropsConfig({
-          label: '必填',
-          defaultValue: false
-        }),
         isHidden: createSwitchPropsConfig({
           label: '隐藏',
-          defaultValue: false
-        }),
-        isDisabled: createSwitchPropsConfig({
-          label: '禁用',
           defaultValue: false
         })
       }

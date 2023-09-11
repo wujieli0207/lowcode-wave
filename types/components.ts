@@ -18,19 +18,6 @@ export interface IUIComponentRenderParams {
   element: IFieldConfig
 }
 
-// 组件支持配置的属性
-export type ComponentConfigProps = {
-  type: ComponentConfigType
-  label: string // 配置项标题
-  tips?: string // 配置项提示
-  defaultValue?: string | number | false // 配置项默认值
-} & {
-  options?: ComponentConfigOptions[]
-} & {
-  min?: number
-  max?: number
-}
-
 // 属性配置分组
 export interface IComponentConfigPropGroup<T> {
   groupName: string
@@ -48,3 +35,30 @@ export interface ComponentConfigOptions {
   label: string
   value: string | number
 }
+
+// ========== 组件支持配置的属性 ==========
+export type ComponentConfigProps = {
+  type: ComponentConfigType
+} & IDefaultPropsConfig &
+  ISelectPropsConfig &
+  IInputNumberPropsConfig
+
+export interface IDefaultPropsConfig {
+  label: string // 配置项标题
+  tips?: string // 配置项提示
+  defaultValue?: string | number | boolean // 配置项默认值
+  labelWidth?: string // 标签长度
+}
+
+export interface ISelectPropsConfig extends IDefaultPropsConfig {
+  options?: ComponentConfigOptions[]
+}
+
+export interface IInputPropsConfig extends IDefaultPropsConfig {}
+
+export interface IInputNumberPropsConfig extends IDefaultPropsConfig {
+  min?: number
+  max?: number
+}
+
+export interface ISwitchPropsConfig extends IDefaultPropsConfig {}

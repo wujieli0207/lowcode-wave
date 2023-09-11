@@ -1,3 +1,8 @@
 .prop-config-panel {
   margin: 0 8px;
+
+  .prop-config-panel__label {
+    display: flex;
+    font-size: 12px;
+  }
 }

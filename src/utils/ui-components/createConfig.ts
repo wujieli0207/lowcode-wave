@@ -1,35 +1,23 @@
-import { ComponentConfigProps, ComponentConfigType } from '#/components'
-
-interface IDefaultPropsConfig {
-  label: ComponentConfigProps['label']
-  tips?: ComponentConfigProps['tips']
-  defaultValue?: ComponentConfigProps['defaultValue']
-}
-
-interface ISelectPropsConfig extends IDefaultPropsConfig {
-  options: ComponentConfigProps['options']
-}
-
-interface IInputPropsConfig extends IDefaultPropsConfig {}
-
-interface IInputNumberPropsConfig extends IDefaultPropsConfig {
-  min?: ComponentConfigProps['min']
-  max?: ComponentConfigProps['max']
-}
-
-interface ISwitchPropsConfig extends IDefaultPropsConfig {}
+import {
+  ComponentConfigType,
+  IInputNumberPropsConfig,
+  IInputPropsConfig,
+  ISelectPropsConfig,
+  ISwitchPropsConfig
+} from '#/components'
 
 /**
  * @description 创建下拉选择的配置项
  */
 export function createSelectPropsConfig(params: ISelectPropsConfig) {
-  const { label, options, tips, defaultValue } = params
+  const { label, options, tips, defaultValue, labelWidth } = params
   return {
     type: ComponentConfigType.SELECT,
     label,
     options,
     tips,
-    defaultValue
+    defaultValue,
+    labelWidth
   }
 }
 
@@ -37,12 +25,13 @@ export function createSelectPropsConfig(params: ISelectPropsConfig) {
  * @description 创建输入框的配置项
  */
 export function createInputPropsConfig(params: IInputPropsConfig) {
-  const { label, tips, defaultValue } = params
+  const { label, tips, defaultValue, labelWidth } = params
   return {
     type: ComponentConfigType.INPUT,
     label,
     tips,
-    defaultValue
+    defaultValue,
+    labelWidth
   }
 }
 
@@ -50,12 +39,13 @@ export function createInputPropsConfig(params: IInputPropsConfig) {
  * @description 创建数字输入框的配置项
  */
 export function createInputNumberPropsConfig(params: IInputNumberPropsConfig) {
-  const { label, tips, defaultValue, min, max } = params
+  const { label, tips, defaultValue, labelWidth, min, max } = params
   return {
     type: ComponentConfigType.INPUT_NUMBER,
     label,
     tips,
     defaultValue,
+    labelWidth,
     min,
     max
   }
@@ -65,11 +55,12 @@ export function createInputNumberPropsConfig(params: IInputNumberPropsConfig) {
  * @description 创建开关的配置项
  */
 export function createSwitchPropsConfig(params: ISwitchPropsConfig) {
-  const { label, tips, defaultValue } = params
+  const { label, tips, defaultValue, labelWidth = '220px' } = params
   return {
     type: ComponentConfigType.SWITCH,
     label,
     tips,
-    defaultValue
+    defaultValue,
+    labelWidth
   }
 }

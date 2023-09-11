@@ -5,6 +5,7 @@ import uiComponents from '@/components/UIComponents'
 import { IFieldProps } from '#/editor'
 import { ComponentConfigProps, ComponentConfigType } from '#/components'
 import styles from './index.module.scss'
+import { BasicHelp } from '@/components/Basic'
 
 export default defineComponent({
   name: 'PropConfig',
@@ -22,16 +23,23 @@ export default defineComponent({
       propsObj: IFieldProps
     ): JSX.Element => {
       let element
-      const { type, label, tips, options } = config
+      const { type, label, tips, options, defaultValue, labelWidth } = config
+
+      if (defaultValue) {
+        // 此处类型定义有问题，暂时忽略
+        // @ts-ignore
+        propsObj[propKey] = defaultValue
+      }
+
       if (type === ComponentConfigType.INPUT) {
-        element = <el-input v-model={propsObj[propKey]} placeholder={tips || label} />
+        element = <el-input v-model={propsObj[propKey]} placeholder={label} />
       }
       if (type === ComponentConfigType.INPUT_NUMBER) {
-        element = <el-input-number v-model={propsObj[propKey]} placeholder={tips || label} />
+        element = <el-input-number v-model={propsObj[propKey]} placeholder={label} />
       }
       if (type === ComponentConfigType.SELECT) {
         element = (
-          <el-select v-model={propsObj[propKey]} placeholder={tips || label}>
+          <el-select v-model={propsObj[propKey]} placeholder={label}>
             {(options || []).map((option) => {
               return <el-option label={option.label} value={option.value} />
             })}
@@ -42,7 +50,19 @@ export default defineComponent({
         element = <el-switch v-model={propsObj[propKey]} />
       }
 
-      return <el-form-item label={label}>{element}</el-form-item>
+      return (
+        <el-form-item label-width={labelWidth}>
+          {{
+            label: () => (
+              <div class={styles['prop-config-panel__label']}>
+                <span>{label}</span>
+                {tips && <BasicHelp content={tips} />}
+              </div>
+            ),
+            default: () => element
+          }}
+        </el-form-item>
+      )
     }
 
     const FormRenderer = () => {
