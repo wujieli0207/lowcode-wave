@@ -83,7 +83,7 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
           label: '表单内组件尺寸',
           options: [
             {
-              label: '',
+              label: '不设置',
               value: ''
             },
             {
@@ -108,48 +108,6 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
         scrollToError: createSwitchPropsConfig({
           label: '校验失败滚动到第一个错误项',
           defaultValue: false
-        }),
-        size1: createSelectPropsConfig({
-          label: '表单内组件尺寸',
-          options: [
-            {
-              label: '',
-              value: ''
-            },
-            {
-              label: '默认',
-              value: '默认'
-            },
-            {
-              label: 'large',
-              value: 'large'
-            },
-            {
-              label: 'small',
-              value: 'small'
-            }
-          ]
-        }),
-        size2: createSelectPropsConfig({
-          label: '表单内组件尺寸',
-          options: [
-            {
-              label: '',
-              value: ''
-            },
-            {
-              label: '默认',
-              value: '默认'
-            },
-            {
-              label: 'large',
-              value: 'large'
-            },
-            {
-              label: 'small',
-              value: 'small'
-            }
-          ]
         })
       }
     },
