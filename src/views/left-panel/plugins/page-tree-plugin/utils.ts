@@ -2,6 +2,7 @@ import { IFieldConfig } from '#/editor'
 import { UI_VL } from '@/constant/componentConstant'
 
 export interface ITreeData {
+  id: string
   label: string
   children: ITreeData[]
 }
@@ -14,6 +15,7 @@ export function getTreeWithLabel(treeData: IFieldConfig[]) {
 
   treeData.forEach((item) => {
     result.push({
+      id: item._id,
       label: UI_VL[item.type],
       children: item.children && item.children.length > 0 ? getTreeWithLabel(item.children) : []
     })
