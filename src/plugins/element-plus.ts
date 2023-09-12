@@ -28,7 +28,8 @@ import {
   ElDropdownMenu,
   ElDropdownItem,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTree
 } from 'element-plus'
 
 const components = [
@@ -59,7 +60,8 @@ const components = [
   ElDropdownMenu,
   ElDropdownItem,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTree
 ]
 
 export function setupElementPlus(app: App) {
