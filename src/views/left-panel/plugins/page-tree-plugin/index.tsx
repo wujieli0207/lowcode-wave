@@ -52,18 +52,16 @@ export default defineComponent({
     }
 
     return () => (
-      <>
-        <el-tree
-          ref={pageTreeRef}
-          data={treeData.value}
-          props={defaultProps}
-          nodeKey="id"
-          defaultExpandAll={true}
-          expandOnClickNode={false}
-          onNodeClick={(selectedNode: ITreeData) => handleNodeClick(selectedNode)}
-          onSetCurrentKey={(key: string) => console.log('key: ', key)}
-        ></el-tree>
-      </>
+      // TODO 获取 ref 存在问题，暂时还不能做到选择组件时，选中对应树节点
+      <el-tree
+        ref={pageTreeRef}
+        data={treeData.value}
+        props={defaultProps}
+        nodeKey="id"
+        defaultExpandAll={true}
+        expandOnClickNode={false}
+        onNodeClick={(selectedNode: ITreeData) => handleNodeClick(selectedNode)}
+      />
     )
   }
 })
