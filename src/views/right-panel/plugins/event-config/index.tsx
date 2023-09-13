@@ -8,7 +8,7 @@ import { EVENT_VL, OP_TYPE_VL } from '@/constant/eventConstant'
 import { isArray } from 'lodash-es'
 import { handleAddEvent, handleDeleteEvent, handleEditEvent } from './utils'
 import { Plus, Delete } from '@element-plus/icons-vue'
-import { IFieldConfig, IEventKey } from '#/editor'
+import { IFieldConfig, EventKey } from '#/editor'
 import { EventCard } from './components'
 
 export default defineComponent({
@@ -25,14 +25,14 @@ export default defineComponent({
       {
         tips: '新增事件',
         icon: Plus,
-        click: (field: IFieldConfig, eventKey: IEventKey) => {
+        click: (field: IFieldConfig, eventKey: EventKey) => {
           handleEditEvent(field, eventKey)
         }
       },
       {
         tips: '删除事件',
         icon: Delete,
-        click: (field: IFieldConfig, eventKey: IEventKey) => {
+        click: (field: IFieldConfig, eventKey: EventKey) => {
           handleDeleteEvent(field, eventKey)
         }
       }
@@ -91,7 +91,7 @@ export default defineComponent({
                                   onClick={(e) => {
                                     action.click(
                                       currentField.value!,
-                                      eventKey as unknown as IEventKey
+                                      eventKey as unknown as EventKey
                                     )
                                     e.stopPropagation()
                                   }}

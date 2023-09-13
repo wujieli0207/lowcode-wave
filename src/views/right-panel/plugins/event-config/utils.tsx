@@ -1,4 +1,4 @@
-import { IEventKey, IFieldConfig } from '#/editor'
+import { EventKey, IFieldConfig } from '#/editor'
 import { useModal } from '@/hooks/useModal'
 import styles from './index.module.scss'
 import { ref } from 'vue'
@@ -15,7 +15,7 @@ const { setCurrentFiled } = jsonConfigStore
 /**
  * @description 添加事件
  */
-export function handleAddEvent(field: IFieldConfig, eventKey: IEventKey) {
+export function handleAddEvent(field: IFieldConfig, eventKey: EventKey) {
   field.events = {
     ...field.events,
     [eventKey]: {
@@ -27,14 +27,14 @@ export function handleAddEvent(field: IFieldConfig, eventKey: IEventKey) {
 /**
  * @description 删除事件
  */
-export function handleDeleteEvent(field: IFieldConfig, eventKey: IEventKey) {
+export function handleDeleteEvent(field: IFieldConfig, eventKey: EventKey) {
   delete field.events[eventKey]
 }
 
 /**
  * @description 编辑事件
  */
-export function handleEditEvent(field: IFieldConfig, eventKey: IEventKey) {
+export function handleEditEvent(field: IFieldConfig, eventKey: EventKey) {
   function handleSelectOperation(operation: IOperationConfig) {
     prevSelectedOperation.value = selectedOperation.value
     if (prevSelectedOperation.value) {

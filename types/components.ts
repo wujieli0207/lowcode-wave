@@ -1,5 +1,5 @@
 import { UI_KV } from '@/constant/componentConstant'
-import { IFieldConfig, IFieldProps, IEventKey } from './editor'
+import { IFieldConfig, IFieldProps, EventKey } from './editor'
 
 export interface IUIComponent {
   label: string // 组件标题
@@ -19,7 +19,7 @@ export interface IUIComponentRenderParams {
 }
 
 export interface IEventConfig {
-  type: IEventKey
+  type: EventKey
   args?: Record<string, unknown>
 }
 
