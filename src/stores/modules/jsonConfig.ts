@@ -23,6 +23,7 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
   })
 
   // ========== field 相关操作 =========
+  // TODO 需要增加一个 type 类型，表示当前操作，用于撤销和重做
   function setCurrentFiled(field: IFieldConfig) {
     jsonConfig.currentField = field
   }

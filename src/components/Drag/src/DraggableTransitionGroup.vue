@@ -7,6 +7,7 @@
     :clone="clone"
     @start="isDrug = true"
     @end="isDrug = false"
+    @change="handleChange"
   >
     <template #item="item">
       <div>
@@ -25,6 +26,7 @@ import Draggable from 'vuedraggable'
 import { useVModel } from '@vueuse/core'
 import { computed } from 'vue'
 import { PropType } from 'vue'
+import { VueDraggableChangeEvent } from '#/plugin'
 
 defineOptions({
   name: 'DraggableTransitionGroup'
@@ -53,7 +55,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:moduleValue', 'update:drag'])
+const emit = defineEmits(['update:moduleValue', 'update:drag', 'change'])
 
 const list = useVModel(props, 'moduleValue', emit)
 const isDrug = useVModel(props, 'drag', emit)
@@ -66,4 +68,8 @@ const defaultDragOptions = computed(() => {
     ghostClass: 'ghost'
   }
 })
+
+function handleChange(value: VueDraggableChangeEvent) {
+  emit('change', value, list.value)
+}
 </script>

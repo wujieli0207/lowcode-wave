@@ -1,13 +1,15 @@
-import { defineComponent, ref, toRefs } from 'vue'
+import { defineComponent, ref, toRefs, watch } from 'vue'
 import styles from './index.module.scss'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { storeToRefs } from 'pinia'
 import uiComponents from '@/components/UIComponents'
-import { EVENT_VL } from '@/constant/eventConstant'
+import { DraggableTransitionGroup } from '@/components/Drag'
+import { EVENT_VL, OP_TYPE_VL } from '@/constant/eventConstant'
 import { isArray } from 'lodash-es'
 import { handleAddEvent, handleDeleteEvent, handleEditEvent } from './utils'
 import { Plus, Delete } from '@element-plus/icons-vue'
-import { IEvent, IFieldConfig } from '#/editor'
+import { IFieldConfig, IEventKey } from '#/editor'
+import { EventCard } from './components'
 
 export default defineComponent({
   key: 'EventConfigPlugin',
@@ -23,22 +25,21 @@ export default defineComponent({
       {
         tips: '新增事件',
         icon: Plus,
-        click: (field: IFieldConfig, event: IEvent) => {
-          handleEditEvent(field, event)
+        click: (field: IFieldConfig, eventKey: IEventKey) => {
+          handleEditEvent(field, eventKey)
         }
       },
       {
         tips: '删除事件',
         icon: Delete,
-        click: (field: IFieldConfig, event: IEvent) => {
-          handleDeleteEvent(field, event)
+        click: (field: IFieldConfig, eventKey: IEventKey) => {
+          handleDeleteEvent(field, eventKey)
         }
       }
     ]
 
     return (
       <div class={styles['event-config-panel']}>
-        <el-button onClick={handleEditEvent}>test</el-button>
         {/* 添加事件 */}
         <el-dropdown trigger="click">
           {{
@@ -56,10 +57,8 @@ export default defineComponent({
                   fieldConfig.events.map((event) => {
                     return (
                       <el-dropdown-item
-                        disabled={currentField.value?.events?.some(
-                          (item) => item.type === event.type
-                        )}
-                        onClick={(event) => handleAddEvent(currentField.value!, event)}
+                        disabled={Object.keys(currentField.value?.events!).includes(event.type)}
+                        onClick={() => handleAddEvent(currentField.value!, event.type)}
                       >
                         {EVENT_VL[event.type]}
                       </el-dropdown-item>
@@ -72,44 +71,69 @@ export default defineComponent({
         </el-dropdown>
 
         {/* 事件面板 */}
-        {currentField.value?.events?.map((event) => {
-          const activeCollapse = ref(event.type)
-          return (
-            <el-collapse v-model={activeCollapse.value}>
-              <el-collapse-item name={event.type}>
-                {{
-                  title: () => {
-                    return (
-                      <div class={styles['event-header']}>
-                        <span>{EVENT_VL[event.type]}</span>
-                        {acitonList.map((action) => {
-                          return (
-                            <el-tooltip content={action.tips} placement="top">
-                              <el-icon
-                                class={styles['event-header__icon']}
-                                onClick={(e) => {
-                                  action.click(currentField.value!, event)
-                                  e.stopPropagation()
-                                }}
-                              >
-                                <action.icon />
-                              </el-icon>
-                            </el-tooltip>
-                          )
-                        })}
-                      </div>
-                    )
-                  },
-                  default: () => {
-                    // TODO 绘制新增的事件
-                    // TODO 绘制事件编辑 dialog
-                    return <div>123</div>
-                  }
-                }}
-              </el-collapse-item>
-            </el-collapse>
-          )
-        })}
+        {currentField.value?.events &&
+          Object.keys(currentField.value?.events).map((eventKey) => {
+            const activeCollapse = ref(eventKey)
+
+            return (
+              <el-collapse v-model={activeCollapse.value}>
+                <el-collapse-item name={eventKey}>
+                  {{
+                    title: () => {
+                      return (
+                        <div class={styles['event-header']}>
+                          <span>{EVENT_VL[eventKey]}</span>
+                          {acitonList.map((action) => {
+                            return (
+                              <el-tooltip content={action.tips} placement="top">
+                                <el-icon
+                                  class={styles['event-header__icon']}
+                                  onClick={(e) => {
+                                    action.click(
+                                      currentField.value!,
+                                      eventKey as unknown as IEventKey
+                                    )
+                                    e.stopPropagation()
+                                  }}
+                                >
+                                  <action.icon />
+                                </el-icon>
+                              </el-tooltip>
+                            )
+                          })}
+                        </div>
+                      )
+                    },
+                    default: () => {
+                      // TODO 拖动排序功能未实现
+                      const actions = ref(currentField.value?.events[eventKey].actions)
+
+                      return (
+                        actions.value && (
+                          <>
+                            <DraggableTransitionGroup
+                              v-model={actions.value}
+                              item-key="type"
+                              group={{ name: 'components', put: false }}
+                            >
+                              {{
+                                item: ({ element }) => (
+                                  <EventCard
+                                    title={OP_TYPE_VL[element.type]}
+                                    desc={element.args.desc}
+                                  />
+                                )
+                              }}
+                            </DraggableTransitionGroup>
+                          </>
+                        )
+                      )
+                    }
+                  }}
+                </el-collapse-item>
+              </el-collapse>
+            )
+          })}
       </div>
     )
   }

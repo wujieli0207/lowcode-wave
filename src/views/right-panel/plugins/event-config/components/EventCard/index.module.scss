@@ -1,0 +1,35 @@
+.card {
+  margin-bottom: 8px;
+  padding: 4px;
+  background: #f2f2f4;
+  border-radius: 8px;
+
+  .card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card__header__title {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+
+      .title__icon {
+        font-size: 18px;
+        margin-right: 4px;
+        cursor: move;
+      }
+    }
+
+    .card__header__handle {
+      .handle__icon {
+        margin-right: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .card__desc {
+    margin-left: 22px;
+  }
+}

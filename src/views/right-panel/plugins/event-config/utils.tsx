@@ -1,34 +1,41 @@
-import { IFieldConfig, IEvent } from '#/editor'
+import { IEventKey, IFieldConfig } from '#/editor'
 import { useModal } from '@/hooks/useModal'
 import styles from './index.module.scss'
 import { ref } from 'vue'
 import { Check } from '@element-plus/icons-vue'
-import { ElCollapse, ElCollapseItem } from 'element-plus'
-import { Ioperation, operationConfig } from './config'
+import { ElCollapse, ElCollapseItem, ElIcon } from 'element-plus'
+import { IOperationConfig, operationConfig } from './config'
 import { OP_TYPE_VL } from '@/constant/eventConstant'
+import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
+import { cloneDeep } from 'lodash-es'
+
+const jsonConfigStore = useJsonConfigStore()
+const { setCurrentFiled } = jsonConfigStore
 
 /**
  * @description 添加事件
  */
-export function handleAddEvent(field: IFieldConfig, event: IEvent) {
-  field.events.push({
-    type: event.type,
-    args: {}
-  })
+export function handleAddEvent(field: IFieldConfig, eventKey: IEventKey) {
+  field.events = {
+    ...field.events,
+    [eventKey]: {
+      actions: []
+    }
+  }
 }
 
 /**
  * @description 删除事件
  */
-export function handleDeleteEvent(field: IFieldConfig, event: IEvent) {
-  field.events = field.events.filter((item) => item.type !== event.type)
+export function handleDeleteEvent(field: IFieldConfig, eventKey: IEventKey) {
+  delete field.events[eventKey]
 }
 
 /**
  * @description 编辑事件
  */
-export function handleEditEvent(field: IFieldConfig, event: IEvent) {
-  function handleSelectOperation(operation: Ioperation) {
+export function handleEditEvent(field: IFieldConfig, eventKey: IEventKey) {
+  function handleSelectOperation(operation: IOperationConfig) {
     prevSelectedOperation.value = selectedOperation.value
     if (prevSelectedOperation.value) {
       prevSelectedOperation.value.isFocus = false
@@ -46,8 +53,8 @@ export function handleEditEvent(field: IFieldConfig, event: IEvent) {
     prevSelectedOperation.value = null
   }
 
-  const selectedOperation = ref<Nullable<Ioperation>>() // 当前选中操作
-  const prevSelectedOperation = ref<Nullable<Ioperation>>() // 前一个选中操作
+  const selectedOperation = ref<Nullable<IOperationConfig>>() // 当前选中操作
+  const prevSelectedOperation = ref<Nullable<IOperationConfig>>() // 前一个选中操作
 
   useModal({
     title: '编辑事件',
@@ -73,9 +80,9 @@ export function handleEditEvent(field: IFieldConfig, event: IEvent) {
                           >
                             <span>{OP_TYPE_VL[operation.opType]}</span>
                             {operation.isFocus && (
-                              <el-icon class={styles['operation__item_icon']}>
+                              <ElIcon class={styles['operation__item_icon']}>
                                 <Check />
-                              </el-icon>
+                              </ElIcon>
                             )}
                           </div>
                         )
@@ -112,6 +119,24 @@ export function handleEditEvent(field: IFieldConfig, event: IEvent) {
       )
     },
     onComfirm: () => {
+      if (!selectedOperation.value) return
+
+      const currentEvents = cloneDeep(field.events[eventKey]!.actions)
+      currentEvents.push({
+        type: selectedOperation.value.opType,
+        args: selectedOperation.value.args
+      })
+
+      setCurrentFiled(
+        Object.assign(field, {
+          events: {
+            ...field.events,
+            [eventKey]: {
+              actions: currentEvents
+            }
+          }
+        })
+      )
       handleReset()
       return true
     },

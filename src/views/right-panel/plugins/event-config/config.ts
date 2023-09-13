@@ -1,23 +1,19 @@
+import { IOperation } from '#/editor'
 import { OP_TYPE_KV } from '@/constant/eventConstant'
 
-interface IOperationGroup {
+interface IOperationConfigGroup {
   groupName: string // 操作分组
-  operationList: Ioperation[]
+  operationList: IOperationConfig[]
 }
 
-export interface Ioperation {
-  opType: ValueOf<typeof OP_TYPE_KV> // 操作类型
-  args: IoperationArgs // 操作参数
+export interface IOperationConfig {
+  opType: IOperation['type'] // 操作类型
+  args: IOperation['args'] // 操作参数
   ignoreError?: boolean // 是否忽略错误
   isFocus: boolean // 是否被选中
 }
 
-interface IoperationArgs {
-  desc: string // 参数描述
-  [key: string]: unknown
-}
-
-export const operationConfig: IOperationGroup[] = [
+export const operationConfig: IOperationConfigGroup[] = [
   {
     groupName: '页面操作',
     operationList: [
@@ -71,7 +67,7 @@ export const operationConfig: IOperationGroup[] = [
       {
         opType: OP_TYPE_KV.REFRESH_DATA,
         args: {
-          desc: '如果所选组件通过远程获取数据，先发送配置到目标组件，再重新请求数据'
+          desc: '如果所选组件通过远程获取数据，重新请求数据'
         },
         isFocus: false
       },

@@ -6,3 +6,13 @@ export interface IBasePlugin {
   tips?: string // 用于提示
   setup: () => JSX.Element
 }
+
+export type VueDraggableChangeEventKey = 'add' | 'removed' | 'moved'
+
+export type VueDraggableChangeEvent = {
+  [key in VueDraggableChangeEventKey]: {
+    newIndex: number
+    element: any // 移动后的元素
+    oldIndex?: number // moved 时才有
+  }
+}
