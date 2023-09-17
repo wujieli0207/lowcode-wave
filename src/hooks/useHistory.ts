@@ -6,6 +6,7 @@ enablePatches()
 
 interface IUndoStackItem {
   action: string // 操作名称
+  actionTime: Date // 操作时间
   patches: Patch[]
   inversePatches: Patch[]
 }
@@ -53,12 +54,8 @@ const useHistory = <T extends Objectish>(baseState: T) => {
   }
 
   function update(updater: (draft: T) => any, action: string, options: IUpdateOptions = {}) {
-    function listerner(value) {
-      console.log('value: ', value)
-    }
-
     const { callback } = options
-    const [nextState, patches, inversePatches] = produceWithPatches(state.value, updater, listerner)
+    const [nextState, patches, inversePatches] = produceWithPatches(state.value, updater)
 
     state.value = nextState
 
@@ -67,6 +64,7 @@ const useHistory = <T extends Objectish>(baseState: T) => {
       undoStack.value.length = pointer
       undoStack.value.push({
         action,
+        actionTime: new Date(),
         patches,
         inversePatches
       })
@@ -99,16 +97,44 @@ const useHistory = <T extends Objectish>(baseState: T) => {
     state.value = applyPatches(state.value, patches)
   }
 
+  /**
+   * @description 跳转到指定的历史记录
+   */
+  function jumpTo(index: number) {
+    if (index < 0 || index > undoStack.value.length - 1 || index === undoStackPointer.value) return
+
+    const result: Patch[] = []
+    // 撤销操作
+    if (index < undoStackPointer.value) {
+      for (let i = index + 1; i <= undoStackPointer.value; i++) {
+        const { inversePatches } = undoStack.value[i]
+        result.unshift(...inversePatches)
+      }
+    }
+    // 重做操作
+    else {
+      for (let i = undoStackPointer.value + 1; i <= index; i++) {
+        const { patches } = undoStack.value[i]
+        result.push(...patches)
+      }
+    }
+
+    state.value = applyPatches(state.value, result)
+    undoStackPointer.value = index
+  }
+
   return {
     state,
     undoCount,
     redoCount,
     undoDisabled,
     redoDisabled,
+    undoStack,
     enable,
     update,
     undo,
-    redo
+    redo,
+    jumpTo
   }
 }
 

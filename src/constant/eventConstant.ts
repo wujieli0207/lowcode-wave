@@ -45,7 +45,7 @@ export const { HANDLE_KV, HANDLE_VL } = defineConstants(
     // 组件相关
     { key: 'ADD_FIELD_BEFORE', value: 'addFieldBefore', label: '前置插入组件' },
     { key: 'ADD_FIELD_AFTER', value: 'addFieldAfter', label: '后置插入组件' },
-    { key: 'SET_FOCUS', value: 'SET_FOCUS', label: '选中组件' },
+    { key: 'SET_FOCUS', value: 'setFocus', label: '选中组件' },
     { key: 'DELETE_FIELD', value: 'deleteField', label: '删除组件' },
     { key: 'MOVE_FIELD_UP', value: 'moveFieldUp', label: '上移组件' },
     { key: 'MOVE_FIELD_DOWN', value: 'moveFieldDown', label: '下移组件' },
@@ -54,9 +54,9 @@ export const { HANDLE_KV, HANDLE_VL } = defineConstants(
     { key: 'UPDATE_PROPS', value: 'updateProps', label: '修改属性' },
     { key: 'UPDATE_STYLES', value: 'updateStyles', label: '修改样式' },
     // 事件相关
-    { key: 'ADD_PROPS', value: 'addProps', label: '增加事件' },
-    { key: 'UPDATE_PROPS', value: 'updateProps', label: '修改事件' },
-    { key: 'DELETE_PROPS', value: 'deleteProps', label: '删除事件' },
+    { key: 'ADD_EVENT', value: 'addProps', label: '增加事件' },
+    { key: 'UPDATE_EVENT', value: 'updateEvent', label: '修改事件' },
+    { key: 'DELETE_EVENT', value: 'deleteProps', label: '删除事件' },
     { key: 'ADD_OPERATION', value: 'addOperation', label: '增加事件操作' },
     { key: 'UPDATE_OPERATION', value: 'updateOperation', label: '修改事件操作' },
     { key: 'DELETE_OPERATION', value: 'deleteOperation', label: '删除事件操作' },

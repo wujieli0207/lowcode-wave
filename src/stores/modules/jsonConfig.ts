@@ -35,7 +35,9 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     redoCount,
     enable,
     undo,
-    redo
+    redo,
+    undoStack,
+    jumpTo
   } = useHistory(defaultPage)
   enable()
 
@@ -262,7 +264,9 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     // 撤销和重做
     undoCount,
     redoCount,
+    undoStack,
     undo,
-    redo
+    redo,
+    jumpTo
   }
 })

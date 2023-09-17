@@ -11,6 +11,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.4.0
     version: 10.4.0(vue@3.3.4)
+  dayjs:
+    specifier: ^1.11.9
+    version: 1.11.9
   element-plus:
     specifier: ^2.3.10
     version: 2.3.10(vue@3.3.4)

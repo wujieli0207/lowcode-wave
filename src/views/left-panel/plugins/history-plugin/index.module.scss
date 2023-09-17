@@ -1,0 +1,14 @@
+.history {
+  margin: 16px 10px 16px 0;
+  font-size: 12px;
+
+  .history__card {
+    margin-bottom: 4px;
+    cursor: pointer;
+
+    .history__card__item {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
