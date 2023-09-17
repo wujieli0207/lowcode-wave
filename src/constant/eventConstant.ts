@@ -33,3 +33,35 @@ export const { OP_TYPE_KV, OP_TYPE_VL } = defineConstants(
   ] as const,
   'OP_TYPE'
 )
+
+/**
+ * @description 定于用户操作类型，用于撤销和重做
+ */
+export const { HANDLE_KV, HANDLE_VL } = defineConstants(
+  [
+    // 页面相关
+    { key: 'IMPORT_PAGE', value: 'importPage', label: '导入页面' },
+    { key: 'CLEAR_PAGE', value: 'clearPage', label: '清空页面' },
+    // 组件相关
+    { key: 'ADD_FIELD_BEFORE', value: 'addFieldBefore', label: '前置插入组件' },
+    { key: 'ADD_FIELD_AFTER', value: 'addFieldAfter', label: '后置插入组件' },
+    { key: 'SET_FOCUS', value: 'SET_FOCUS', label: '选中组件' },
+    { key: 'DELETE_FIELD', value: 'deleteField', label: '删除组件' },
+    { key: 'MOVE_FIELD_UP', value: 'moveFieldUp', label: '上移组件' },
+    { key: 'MOVE_FIELD_DOWN', value: 'moveFieldDown', label: '下移组件' },
+    // 属性相关
+    { key: 'UPDATE_FIELD_CODE', value: 'updateFieldCode', label: '修改组件code' },
+    { key: 'UPDATE_PROPS', value: 'updateProps', label: '修改属性' },
+    { key: 'UPDATE_STYLES', value: 'updateStyles', label: '修改样式' },
+    // 事件相关
+    { key: 'ADD_PROPS', value: 'addProps', label: '增加事件' },
+    { key: 'UPDATE_PROPS', value: 'updateProps', label: '修改事件' },
+    { key: 'DELETE_PROPS', value: 'deleteProps', label: '删除事件' },
+    { key: 'ADD_OPERATION', value: 'addOperation', label: '增加事件操作' },
+    { key: 'UPDATE_OPERATION', value: 'updateOperation', label: '修改事件操作' },
+    { key: 'DELETE_OPERATION', value: 'deleteOperation', label: '删除事件操作' },
+    // 兜底操作
+    { key: 'OTHER', value: 'other', label: '用户操作' }
+  ] as const,
+  'HANDLE'
+)

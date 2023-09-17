@@ -6,7 +6,7 @@ import type { CSSProperties } from 'vue'
 import { IButtonPropsConfig } from '@/components/UIComponents/Button/createProps'
 import { IInputPropsConfig } from '@/components/UIComponents/Input/createProps'
 import { ISelectPropsConfig } from '@/components/UIComponents/Select/createProps'
-import { EVENT_KV, OP_TYPE_KV } from '@/constant/eventConstant'
+import { EVENT_KV, HANDLE_KV, OP_TYPE_KV } from '@/constant/eventConstant'
 
 export interface IProjectConfig {
   projectId: string
@@ -72,3 +72,6 @@ export interface ISlots {
   name: string
   [key: string]: unknown
 }
+
+// 用户操作类型 key
+export type HandleKey = ValueOf<typeof HANDLE_KV>

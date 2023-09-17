@@ -11,9 +11,9 @@ export default defineComponent({
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentPage, currentField } = toRefs(jsonConfig.value)
-    const { handleSetFocus } = jsonConfigStore
+    const { jsonConfig, currentPage } = storeToRefs(jsonConfigStore)
+    const { currentField } = toRefs(jsonConfig.value)
+    // const { handleSetFocus } = jsonConfigStore
 
     const breadcrumbList = computed(() => {
       const result = findFocusedParents(currentPage.value.children, [], currentField.value?._id)
@@ -31,7 +31,7 @@ export default defineComponent({
           <el-breadcrumb-item
             key={item._id}
             class={styles['breadcrumb-item']}
-            onClick={() => handleSetFocus(item)}
+            // onClick={() => handleSetFocus(item)}
           >
             {UI_VL[item.type]}
           </el-breadcrumb-item>

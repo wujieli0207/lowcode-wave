@@ -1,11 +1,16 @@
 <template>
   <div class="edit">
+    {{ currentPage }}
     <div class="edit__page-name">
       <editor-header />
     </div>
 
     <div class="edit_page-content">
-      <draggable-transition-group v-model="currentPage.children" class="edit__drag-group">
+      <draggable-transition-group
+        :module-value="currentPage.children"
+        class="edit__drag-group"
+        @change="handleOnChange"
+      >
         <template #item="{ element }">
           <!-- 非容器组件，需要添加遮罩避免点击组件 -->
           <div
@@ -34,7 +39,6 @@
 </template>
 
 <script lang="ts" setup>
-import { toRefs } from 'vue'
 import { storeToRefs } from 'pinia'
 import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './components/RenderComp'
@@ -43,13 +47,13 @@ import EditorHeader from './components/EditorHeader'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import type { IFieldConfig } from '#/editor'
 import { getIsContainerComponent } from './utils'
+import { VueDraggableChangeEvent } from '#/plugin'
 
 const jsonConfigStore = useJsonConfigStore()
 
-const { jsonConfig } = storeToRefs(jsonConfigStore)
-const { currentPage } = toRefs(jsonConfig.value)
+const { currentPage } = storeToRefs(jsonConfigStore)
 
-const { setCurrentFiled, handleSetFocus } = jsonConfigStore
+const { setCurrentFiled, addPageChildrenByDrag } = jsonConfigStore
 
 function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   // 如果不是 div 元素，说明点击的是 toolbar 的操作按钮，一般是 svg，不需要处理
@@ -58,7 +62,10 @@ function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   }
 
   setCurrentFiled(element)
-  handleSetFocus(element)
+}
+
+function handleOnChange(value: VueDraggableChangeEvent) {
+  addPageChildrenByDrag(value)
 }
 </script>
 

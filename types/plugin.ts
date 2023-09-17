@@ -7,12 +7,12 @@ export interface IBasePlugin {
   setup: () => JSX.Element
 }
 
-export type VueDraggableChangeEventKey = 'add' | 'removed' | 'moved'
+export type VueDraggableChangeEventKey = 'added' | 'removed' | 'moved'
 
-export type VueDraggableChangeEvent = {
+export type VueDraggableChangeEvent<T = any> = {
   [key in VueDraggableChangeEventKey]: {
     newIndex: number
-    element: any // 移动后的元素
+    element: T // 移动后的元素
     oldIndex?: number // moved 时才有
   }
 }

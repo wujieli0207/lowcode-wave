@@ -1,12 +1,12 @@
-import { defineComponent, ref, toRefs } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import uiComponents from '@/components/UIComponents'
-import { IFieldProps } from '#/editor'
+import { IFieldConfig, IFieldProps } from '#/editor'
 import { ComponentConfigProps, ComponentConfigType } from '#/components'
 import styles from './index.module.scss'
 import { BasicHelp } from '@/components/Basic'
-import { initActiveCollapse } from './utils'
+import { initActiveCollapse, handleUpdateFieldProps, handleUpdateFieldCode } from './utils'
 
 export default defineComponent({
   key: 'PropConfigPlugin',
@@ -15,15 +15,15 @@ export default defineComponent({
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentField } = toRefs(jsonConfig.value)
+    const { currentField } = storeToRefs(jsonConfigStore)
 
     const activeCollapse = ref(initActiveCollapse(currentField.value))
 
     const fieldPropsRenderer = (
       propKey: keyof IFieldProps,
       config: ComponentConfigProps,
-      propsObj: IFieldProps
+      propsObj: IFieldProps,
+      currentField: IFieldConfig
     ): JSX.Element => {
       let element
       const { type, label, tips, options, defaultValue, labelWidth } = config
@@ -34,15 +34,22 @@ export default defineComponent({
         propsObj[propKey] = defaultValue
       }
 
+      const modelValue = computed({
+        get: () => propsObj[propKey],
+        set: (value) => {
+          handleUpdateFieldProps({ value, propKey, field: currentField })
+        }
+      })
+
       if (type === ComponentConfigType.INPUT) {
-        element = <el-input v-model={propsObj[propKey]} placeholder={label} />
+        element = <el-input v-model={modelValue.value} placeholder={label} />
       }
       if (type === ComponentConfigType.INPUT_NUMBER) {
-        element = <el-input-number v-model={propsObj[propKey]} placeholder={label} />
+        element = <el-input-number v-model={modelValue.value} placeholder={label} />
       }
       if (type === ComponentConfigType.SELECT) {
         element = (
-          <el-select v-model={propsObj[propKey]} placeholder={label}>
+          <el-select v-model={modelValue.value} placeholder={label}>
             {(options || []).map((option) => {
               return <el-option label={option.label} value={option.value} />
             })}
@@ -50,7 +57,7 @@ export default defineComponent({
         )
       }
       if (type === ComponentConfigType.SWITCH) {
-        element = <el-switch v-model={propsObj[propKey]} />
+        element = <el-switch v-model={modelValue.value} />
       }
 
       return (
@@ -72,6 +79,13 @@ export default defineComponent({
       const formContent: JSX.Element[] = []
 
       if (currentField.value) {
+        const fieldCode = computed({
+          get: () => currentField.value?.fieldCode,
+          set: (value) => {
+            handleUpdateFieldCode(currentField.value!, value!)
+          }
+        })
+
         // 通用配置：id 和绑定字段
         formContent.push(
           <>
@@ -80,7 +94,7 @@ export default defineComponent({
                 <el-input value={currentField.value._id} disabled={true} />
               </el-form-item>
               <el-form-item label="字段key">
-                <el-input v-model={currentField.value.fieldCode} />
+                <el-input v-model={fieldCode.value} />
               </el-form-item>
             </el-collapse-item>
           </>
@@ -96,7 +110,8 @@ export default defineComponent({
                   return fieldPropsRenderer(
                     key as keyof IFieldProps,
                     config as ComponentConfigProps,
-                    currentField.value?.props as IFieldProps
+                    currentField.value?.props as IFieldProps,
+                    currentField.value!
                   )
                 })}
               </el-collapse-item>

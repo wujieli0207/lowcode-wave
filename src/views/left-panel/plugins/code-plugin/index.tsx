@@ -1,5 +1,5 @@
 import { EditPen } from '@element-plus/icons-vue'
-import { defineComponent, toRefs, computed } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { JsonEditor } from '@/components/Editor'
 import styles from './index.module.scss'
 import { storeToRefs } from 'pinia'
@@ -12,8 +12,7 @@ export default defineComponent({
   icon: EditPen,
   setup() {
     const jsonConfigStore = useJsonConfigStore()
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentPage } = toRefs(jsonConfig.value)
+    const { currentPage } = storeToRefs(jsonConfigStore)
 
     const editor = computed(() => {
       return JSON.stringify(currentPage.value.children, null, 2)

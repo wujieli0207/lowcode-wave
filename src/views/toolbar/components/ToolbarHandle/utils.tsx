@@ -3,31 +3,26 @@ import { JsonEditor } from '@/components/Editor'
 import { useModal } from '@/hooks/useModal'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { useClipboard } from '@vueuse/core'
-import { ElNotification, ElAlert, ElMessage } from 'element-plus'
+import { ElNotification, ElAlert } from 'element-plus'
 import { ref } from 'vue'
+
+const jsonConfigStore = useJsonConfigStore()
+const { undo, redo, clearPageChildren, importPageChildren } = jsonConfigStore
 
 /**
  *
  * @description 撤销
  */
-export function handleUndo(currentPage: IPageConfig) {
-  console.log('handleUndo 待实现: ', currentPage)
-  ElMessage({
-    message: '请期待',
-    type: 'info'
-  })
+export function handleUndo() {
+  undo()
 }
 
 /**
  *
  * @description 重做
  */
-export function handleRedo(currentPage: IPageConfig) {
-  console.log('handleRedo 待实现: ', currentPage)
-  ElMessage({
-    message: '请期待',
-    type: 'info'
-  })
+export function handleRedo() {
+  redo()
 }
 
 /**
@@ -35,8 +30,7 @@ export function handleRedo(currentPage: IPageConfig) {
  * @description 清空页面
  */
 export function handleClearPage() {
-  const { clearPage } = useJsonConfigStore()
-  clearPage()
+  clearPageChildren()
 
   ElNotification({
     message: '清空页面成功',
@@ -51,7 +45,7 @@ export function handleClearPage() {
  *
  */
 export function handleImportJSON(currentPage: IPageConfig) {
-  const editorValue = ref(JSON.stringify(currentPage, null, 2))
+  const editorValue = ref(JSON.stringify(currentPage.children, null, 2))
   const hangelEditorChange = (value) => {
     editorValue.value = value
   }
@@ -71,8 +65,7 @@ export function handleImportJSON(currentPage: IPageConfig) {
     onComfirm: () => {
       try {
         const json = JSON.parse(editorValue.value)
-        const { updatePage } = useJsonConfigStore()
-        updatePage(json)
+        importPageChildren(json)
         ElNotification({
           message: '导入成功',
           type: 'success',

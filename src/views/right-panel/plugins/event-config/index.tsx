@@ -105,14 +105,19 @@ export default defineComponent({
                       )
                     },
                     default: () => {
-                      // TODO 拖动排序功能未实现
                       const actions = ref(currentField.value?.events[eventKey].actions)
+
+                      function handleUpdate(value) {
+                        // TODO 拖动排序功能未实现
+                        console.log('拖动排序功能未实现: ', value)
+                      }
 
                       return (
                         actions.value && (
                           <>
                             <DraggableTransitionGroup
-                              v-model={actions.value}
+                              moduleValue={actions.value}
+                              onUpdate:moduleValue={handleUpdate}
                               item-key="type"
                               group={{ name: 'components', put: false }}
                             >

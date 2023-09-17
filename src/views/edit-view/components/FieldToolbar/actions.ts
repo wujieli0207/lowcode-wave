@@ -24,22 +24,22 @@ export const defaultActions: IDefaultAction[] = [
   },
   {
     name: '向前插入节点',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleInsertBefore(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleInsertBefore(element)
     },
     icon: ArrowLeft
   },
   {
     name: '向后插入节点',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleInsertAfter(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleInsertAfter(element)
     },
     icon: ArrowRight
   },
   {
     name: '删除节点',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleDelete(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleDelete(element)
     },
     icon: Delete
   }
@@ -75,21 +75,21 @@ export const moreActions: IMoreAction[] = [
   },
   {
     name: '向前复制一份',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleInsertBefore(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleInsertBefore(element)
     },
     divided: true
   },
   {
     name: '向后复制一份',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleInsertAfter(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleInsertAfter(element)
     }
   },
   {
     name: '删除',
-    click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleDelete(element, pageChildren)
+    click: (element: IFieldConfig) => {
+      handleDelete(element)
     },
     highlight: true
   }

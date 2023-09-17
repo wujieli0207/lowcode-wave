@@ -1,14 +1,20 @@
 import { enablePatches, applyPatches, produceWithPatches, Patch, Objectish } from 'immer'
-import { computed, ref, shallowRef } from 'vue'
+import { isFunction } from 'lodash-es'
+import { computed, ref } from 'vue'
 
 enablePatches()
 
 interface IUndoStackItem {
+  action: string // 操作名称
   patches: Patch[]
   inversePatches: Patch[]
 }
 
-export const useHistory = <T extends Objectish>(baseState: T) => {
+interface IUpdateOptions {
+  callback?: (patches: Patch[], inversePatches: Patch[]) => void // 回调函数
+}
+
+const useHistory = <T extends Objectish>(baseState: T) => {
   // 历史记录
   const undoStack = ref<IUndoStackItem[]>([])
   // 当前索引
@@ -16,7 +22,7 @@ export const useHistory = <T extends Objectish>(baseState: T) => {
   // 是否开启记录
   const undoable = ref(false)
 
-  const state = shallowRef(baseState)
+  const state = ref(baseState)
 
   /**
    * @description 撤销任务数量统计
@@ -46,15 +52,28 @@ export const useHistory = <T extends Objectish>(baseState: T) => {
     undoable.value = value
   }
 
-  function undate(updater: (draft: T) => any) {
-    const [nextState, patches, inversePatches] = produceWithPatches(state.value, updater)
+  function update(updater: (draft: T) => any, action: string, options: IUpdateOptions = {}) {
+    function listerner(value) {
+      console.log('value: ', value)
+    }
+
+    const { callback } = options
+    const [nextState, patches, inversePatches] = produceWithPatches(state.value, updater, listerner)
 
     state.value = nextState
 
     if (undoable.value && patches.length && inversePatches.length) {
       const pointer = ++undoStackPointer.value
       undoStack.value.length = pointer
-      undoStack.value.push({ patches, inversePatches })
+      undoStack.value.push({
+        action,
+        patches,
+        inversePatches
+      })
+    }
+
+    if (isFunction(callback)) {
+      callback(patches, inversePatches)
     }
   }
 
@@ -81,13 +100,16 @@ export const useHistory = <T extends Objectish>(baseState: T) => {
   }
 
   return {
+    state,
     undoCount,
     redoCount,
     undoDisabled,
     redoDisabled,
     enable,
-    undate,
+    update,
     undo,
     redo
   }
 }
+
+export default useHistory

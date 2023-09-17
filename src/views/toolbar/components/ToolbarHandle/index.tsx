@@ -1,5 +1,5 @@
 import { Delete, Download, RefreshLeft, RefreshRight, Upload } from '@element-plus/icons-vue'
-import { defineComponent, toRefs } from 'vue'
+import { defineComponent } from 'vue'
 import styles from './index.module.scss'
 import {
   handleClearPage,
@@ -16,8 +16,7 @@ export default defineComponent({
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentPage } = toRefs(jsonConfig.value)
+    const { currentPage, undoCount, redoCount } = storeToRefs(jsonConfigStore)
 
     const handleList = [
       {
@@ -26,12 +25,12 @@ export default defineComponent({
           {
             label: '撤销',
             icon: RefreshLeft,
-            click: () => handleUndo(currentPage.value)
+            click: () => handleUndo()
           },
           {
             label: '重做',
             icon: RefreshRight,
-            click: () => handleRedo(currentPage.value)
+            click: () => handleRedo()
           }
         ]
       },
@@ -66,7 +65,11 @@ export default defineComponent({
                   <el-icon>
                     <item.icon />
                   </el-icon>
-                  <span>{item.label}</span>
+                  <span>
+                    {item.label}
+                    {item.label === '撤销' ? `(${undoCount.value})` : ''}
+                    {item.label === '重做' ? `(${redoCount.value})` : ''}
+                  </span>
                 </div>
               )
             })}

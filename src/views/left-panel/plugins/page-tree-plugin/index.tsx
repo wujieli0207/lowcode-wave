@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, toRefs } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { ElTree } from 'element-plus'
 import { Document } from '@element-plus/icons-vue'
@@ -21,9 +21,8 @@ export default defineComponent({
     const pageTreeRef = ref<InstanceType<typeof ElTree>>()
 
     const jsonConfigStore = useJsonConfigStore()
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentPage } = toRefs(jsonConfig.value)
-    const { setCurrentFiled, handleSetFocus } = jsonConfigStore
+    const { currentPage } = storeToRefs(jsonConfigStore)
+    const { setCurrentFiled } = jsonConfigStore
 
     const treeData = computed((): ITreeData[] => {
       if (!currentPage.value) return []
@@ -48,7 +47,6 @@ export default defineComponent({
       ) as unknown as IFieldConfig
 
       setCurrentFiled(result)
-      handleSetFocus(result)
     }
 
     return () => (
