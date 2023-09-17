@@ -56,7 +56,7 @@ export const moreActions: IMoreAction[] = [
   {
     name: '上移节点',
     click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleMoveUp(element, pageChildren)
+      handleMoveUp(element)
     },
     disabled: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
       const currentIndex = pageChildren.findIndex((item) => item._id === element._id)
@@ -66,7 +66,7 @@ export const moreActions: IMoreAction[] = [
   {
     name: '下移节点',
     click: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
-      handleMoveDown(element, pageChildren)
+      handleMoveDown(element)
     },
     disabled: (element: IFieldConfig, pageChildren: IPageConfig['children']) => {
       const currentIndex = pageChildren.findIndex((item) => item._id === element._id)

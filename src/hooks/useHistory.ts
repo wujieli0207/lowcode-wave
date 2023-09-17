@@ -11,7 +11,7 @@ interface IUndoStackItem {
   inversePatches: Patch[]
 }
 
-interface IUpdateOptions {
+export interface IUpdateOptions {
   callback?: (patches: Patch[], inversePatches: Patch[]) => void // 回调函数
 }
 

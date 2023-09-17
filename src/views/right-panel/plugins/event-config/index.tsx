@@ -1,4 +1,4 @@
-import { defineComponent, ref, toRefs, watch } from 'vue'
+import { defineComponent, ref, toRefs } from 'vue'
 import styles from './index.module.scss'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { storeToRefs } from 'pinia'
