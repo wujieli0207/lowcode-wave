@@ -60,6 +60,7 @@ export const { HANDLE_KV, HANDLE_VL } = defineConstants(
     { key: 'ADD_OPERATION', value: 'addOperation', label: '增加事件操作' },
     { key: 'UPDATE_OPERATION', value: 'updateOperation', label: '修改事件操作' },
     { key: 'DELETE_OPERATION', value: 'deleteOperation', label: '删除事件操作' },
+    { key: 'MOVE_OPERATION', value: 'moveOperation', label: '移动事件操作' },
     // 兜底操作
     { key: 'OTHER', value: 'other', label: '用户操作' }
   ] as const,

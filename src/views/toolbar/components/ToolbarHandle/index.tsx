@@ -25,12 +25,12 @@ export default defineComponent({
           {
             label: '撤销',
             icon: RefreshLeft,
-            click: () => handleUndo()
+            click: () => handleUndo(currentPage)
           },
           {
             label: '重做',
             icon: RefreshRight,
-            click: () => handleRedo()
+            click: () => handleRedo(currentPage)
           }
         ]
       },

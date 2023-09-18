@@ -1,6 +1,6 @@
 <template>
   <div class="edit">
-    {{ currentPage }}
+    {{ currentField }}
     <div class="edit__page-name">
       <editor-header />
     </div>
@@ -51,7 +51,7 @@ import { VueDraggableChangeEvent } from '#/plugin'
 
 const jsonConfigStore = useJsonConfigStore()
 
-const { currentPage } = storeToRefs(jsonConfigStore)
+const { currentPage, currentField } = storeToRefs(jsonConfigStore)
 
 const { setCurrentFiled, addPageChildrenByDrag } = jsonConfigStore
 

@@ -28,9 +28,7 @@ export interface IFieldConfig {
   type: string // 组件类型
   value: unknown // 组件绑定数据
   props: IFieldProps
-  events: {
-    [key in EventKey]?: IEventInstance
-  }
+  events: FieldEvents
   styles: CSSProperties
   isFocus: boolean // 是否是被选中状态
   children: IFieldConfig[] // 嵌套或者插槽元素
@@ -49,6 +47,10 @@ export interface IFieldBasicProps {
   isDisabled?: boolean | string // 是否禁用，true-禁用，支持表达式
 }
 
+export type FieldEvents = {
+  [key in EventKey]?: IEventInstance
+}
+
 export type EventKey = ValueOf<typeof EVENT_KV>
 
 export interface IEventInstance {
@@ -59,10 +61,10 @@ export type OperationType = ValueOf<typeof OP_TYPE_KV>
 
 export interface IOperation {
   type: OperationType
-  args: IoperationConfigArgs
+  args: IOperationConfigArgs
 }
 
-export interface IoperationConfigArgs {
+export interface IOperationConfigArgs {
   desc: string // 参数描述
   [key: string]: unknown
 }

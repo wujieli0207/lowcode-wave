@@ -1,9 +1,7 @@
-import { IFieldConfig, IFieldProps, IPageConfig } from '#/editor'
-import { HANDLE_KV, HANDLE_VL } from '@/constant/eventConstant'
+import { IFieldConfig, IPageConfig } from '#/editor'
 import useHistory from '@/hooks/useHistory'
 import { cloneDeep } from 'lodash-es'
 import { defineStore } from 'pinia'
-import { find } from 'tree-lodash'
 import { reactive, ref } from 'vue'
 import {
   addPageChildren,
@@ -13,7 +11,17 @@ import {
   importPageChildren,
   movePageChildren
 } from './page'
-import { handleSetFocus as handleSetFocusFn } from './field'
+import {
+  handleSetFocus as handleSetFocusFn,
+  updateFieldCode,
+  updateFieldProps,
+  updateFieldStyles,
+  addFieldEvent,
+  deleteFieldEvent,
+  addFieldEventOperation,
+  moveFieldEventOperation,
+  deleteFieldEventOperation
+} from './field'
 
 const defaultPage: IPageConfig = {
   pageId: 'home',
@@ -61,81 +69,6 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     isSetFocus && handleSetFocus(currentField.value)
   }
 
-  function updateFieldCode(field: IFieldConfig, code: string) {
-    updateHistory(
-      (page: IPageConfig) => {
-        const fieldItem = find(
-          page.children,
-          (item) => (item as unknown as IFieldConfig)._id === field._id
-        ) as unknown as IFieldConfig
-
-        fieldItem.fieldCode = code
-      },
-      HANDLE_VL[HANDLE_KV.UPDATE_FIELD_CODE],
-      {
-        callback: (patches) => {
-          if (currentField.value?.fieldCode) {
-            currentField.value.fieldCode = patches[0].value
-          }
-        }
-      }
-    )
-  }
-
-  function updateFieldProps(field: IFieldConfig, propsObj: IFieldProps) {
-    updateHistory(
-      (page: IPageConfig) => {
-        const fieldItem = find(
-          page.children,
-          (item) => (item as unknown as IFieldConfig)._id === field._id
-        ) as unknown as IFieldConfig
-
-        fieldItem.props = {
-          ...fieldItem.props,
-          ...propsObj
-        }
-      },
-      HANDLE_VL[HANDLE_KV.UPDATE_PROPS],
-      {
-        callback: (patches) => {
-          if (currentField.value?.props) {
-            currentField.value.props = {
-              ...currentField.value.props,
-              ...patches[0].value
-            }
-          }
-        }
-      }
-    )
-  }
-
-  function updateFieldStyles(field: IFieldConfig, stylesObj: IFieldProps) {
-    updateHistory(
-      (page: IPageConfig) => {
-        const fieldItem = find(
-          page.children,
-          (item) => (item as unknown as IFieldConfig)._id === field._id
-        ) as unknown as IFieldConfig
-
-        fieldItem.styles = {
-          ...fieldItem.styles,
-          ...stylesObj
-        }
-      },
-      HANDLE_VL[HANDLE_KV.UPDATE_STYLES],
-      {
-        callback: (patches) => {
-          if (currentField.value?.styles) {
-            currentField.value.styles = {
-              ...currentField.value.styles,
-              ...patches[0].value
-            }
-          }
-        }
-      }
-    )
-  }
-
   return {
     jsonConfig,
     currentField,
@@ -149,9 +82,14 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     importPageChildren: importPageChildren(updateHistory),
     movePageChildren: movePageChildren(updateHistory, currentPage),
     // field 相关操作
-    updateFieldCode,
-    updateFieldProps,
-    updateFieldStyles,
+    updateFieldCode: updateFieldCode(currentField, updateHistory),
+    updateFieldProps: updateFieldProps(currentField, updateHistory),
+    updateFieldStyles: updateFieldStyles(currentField, updateHistory),
+    addFieldEvent: addFieldEvent(currentField, updateHistory),
+    deleteFieldEvent: deleteFieldEvent(currentField, updateHistory),
+    addFieldEventOperation: addFieldEventOperation(currentField, updateHistory),
+    moveFieldEventOperation: moveFieldEventOperation(currentField, updateHistory),
+    deleteFieldEventOperation: deleteFieldEventOperation(currentField, updateHistory),
     // 撤销和重做
     undoCount,
     redoCount,

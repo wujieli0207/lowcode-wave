@@ -7,28 +7,26 @@ import { ElCollapse, ElCollapseItem, ElIcon } from 'element-plus'
 import { IOperationConfig, operationConfig } from './config'
 import { OP_TYPE_VL } from '@/constant/eventConstant'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
-import { cloneDeep } from 'lodash-es'
 
 const jsonConfigStore = useJsonConfigStore()
-const { setCurrentFiled } = jsonConfigStore
+const { addFieldEvent, deleteFieldEvent, addFieldEventOperation } = jsonConfigStore
 
 /**
  * @description 添加事件
  */
 export function handleAddEvent(field: IFieldConfig, eventKey: EventKey) {
-  field.events = {
-    ...field.events,
+  addFieldEvent(field, {
     [eventKey]: {
       actions: []
     }
-  }
+  })
 }
 
 /**
  * @description 删除事件
  */
 export function handleDeleteEvent(field: IFieldConfig, eventKey: EventKey) {
-  delete field.events[eventKey]
+  deleteFieldEvent(field, eventKey)
 }
 
 /**
@@ -121,22 +119,10 @@ export function handleEditEvent(field: IFieldConfig, eventKey: EventKey) {
     onComfirm: () => {
       if (!selectedOperation.value) return
 
-      const currentEvents = cloneDeep(field.events[eventKey]!.actions)
-      currentEvents.push({
+      addFieldEventOperation(field, eventKey, {
         type: selectedOperation.value.opType,
         args: selectedOperation.value.args
       })
-
-      setCurrentFiled(
-        Object.assign(field, {
-          events: {
-            ...field.events,
-            [eventKey]: {
-              actions: currentEvents
-            }
-          }
-        })
-      )
       handleReset()
       return true
     },

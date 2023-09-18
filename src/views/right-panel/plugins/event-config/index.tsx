@@ -1,15 +1,15 @@
-import { defineComponent, ref, toRefs } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import styles from './index.module.scss'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { storeToRefs } from 'pinia'
 import uiComponents from '@/components/UIComponents'
 import { DraggableTransitionGroup } from '@/components/Drag'
-import { EVENT_VL, OP_TYPE_VL } from '@/constant/eventConstant'
+import { EVENT_VL } from '@/constant/eventConstant'
 import { isArray } from 'lodash-es'
 import { handleAddEvent, handleDeleteEvent, handleEditEvent } from './utils'
 import { Plus, Delete } from '@element-plus/icons-vue'
-import { IFieldConfig, EventKey } from '#/editor'
-import { EventCard } from './components'
+import { IFieldConfig, EventKey, IOperation } from '#/editor'
+import { OperationCard } from './components'
 
 export default defineComponent({
   key: 'EventConfigPlugin',
@@ -18,8 +18,8 @@ export default defineComponent({
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 
-    const { jsonConfig } = storeToRefs(jsonConfigStore)
-    const { currentField } = toRefs(jsonConfig.value)
+    const { currentField } = storeToRefs(jsonConfigStore)
+    const { moveFieldEventOperation } = jsonConfigStore
 
     const acitonList = [
       {
@@ -41,34 +41,37 @@ export default defineComponent({
     return (
       <div class={styles['event-config-panel']}>
         {/* 添加事件 */}
-        <el-dropdown trigger="click">
-          {{
-            default: () => (
-              <el-button type="primary" plain={true} class={styles['add-btn']}>
-                添加事件
-              </el-button>
-            ),
-            dropdown: () => {
-              if (currentField.value) {
-                const fieldConfig = uiComponents[currentField.value.type]
 
-                return (
-                  isArray(fieldConfig.events) &&
-                  fieldConfig.events.map((event) => {
-                    return (
-                      <el-dropdown-item
-                        disabled={Object.keys(currentField.value?.events!).includes(event.type)}
-                        onClick={() => handleAddEvent(currentField.value!, event.type)}
-                      >
-                        {EVENT_VL[event.type]}
-                      </el-dropdown-item>
-                    )
-                  })
-                )
+        {currentField.value && (
+          <el-dropdown trigger="click">
+            {{
+              default: () => (
+                <el-button type="primary" plain={true} class={styles['add-btn']}>
+                  添加事件
+                </el-button>
+              ),
+              dropdown: () => {
+                if (currentField.value) {
+                  const fieldConfig = uiComponents[currentField.value.type]
+
+                  return (
+                    isArray(fieldConfig.events) &&
+                    fieldConfig.events.map((event) => {
+                      return (
+                        <el-dropdown-item
+                          disabled={Object.keys(currentField.value?.events!).includes(event.type)}
+                          onClick={() => handleAddEvent(currentField.value!, event.type)}
+                        >
+                          {EVENT_VL[event.type]}
+                        </el-dropdown-item>
+                      )
+                    })
+                  )
+                }
               }
-            }
-          }}
-        </el-dropdown>
+            }}
+          </el-dropdown>
+        )}
 
         {/* 事件面板 */}
         {currentField.value?.events &&
@@ -105,27 +108,27 @@ export default defineComponent({
                       )
                     },
                     default: () => {
-                      const actions = ref(currentField.value?.events[eventKey].actions)
-
-                      function handleUpdate(value) {
-                        // TODO 拖动排序功能未实现
-                        console.log('拖动排序功能未实现: ', value)
-                      }
+                      const actions = computed({
+                        get: () => currentField.value?.events[eventKey].actions,
+                        set: (value) => {
+                          moveFieldEventOperation(currentField.value!, eventKey, value)
+                        }
+                      })
 
                       return (
                         actions.value && (
                           <>
                             <DraggableTransitionGroup
-                              moduleValue={actions.value}
-                              onUpdate:moduleValue={handleUpdate}
+                              v-model={actions.value}
                               item-key="type"
                               group={{ name: 'components', put: false }}
                             >
                               {{
-                                item: ({ element }) => (
-                                  <EventCard
-                                    title={OP_TYPE_VL[element.type]}
-                                    desc={element.args.desc}
+                                item: ({ element }: { element: IOperation }) => (
+                                  <OperationCard
+                                    operation={element}
+                                    field={currentField}
+                                    eventKey={eventKey as EventKey}
                                   />
                                 )
                               }}

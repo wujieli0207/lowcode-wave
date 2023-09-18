@@ -23,7 +23,7 @@ export default defineComponent({
       const field = find(currentPage.value.children, (item) => {
         return (item as unknown as IFieldConfig)._id === currentField.value!._id
       }) as unknown as IFieldConfig
-      setCurrentFiled(field)
+      setCurrentFiled(field, false)
     }
 
     function handleClick(index: number) {
