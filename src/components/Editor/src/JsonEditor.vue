@@ -25,7 +25,7 @@ self.MonacoEnvironment = {
 }
 
 const props = defineProps({
-  value: {
+  moduleValue: {
     type: String,
     default: ''
   },
@@ -39,8 +39,8 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:value', 'change'])
-const editorValue = useVModel(props, 'value', emit)
+const emit = defineEmits(['update:moduleValue', 'change'])
+const editorValue = useVModel(props, 'moduleValue', emit)
 const options = computed(() => {
   return {
     language: 'sql',

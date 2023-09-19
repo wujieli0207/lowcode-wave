@@ -120,10 +120,10 @@ export function clearPageChildren(updateHistory: updateHistoryFn) {
 /**
  * @description 导入页面组件
  */
-export function importPageChildren(updateHistory: updateHistoryFn) {
-  return function (pageChildren: IFieldConfig[]) {
+export function updatePageChildren(updateHistory: updateHistoryFn) {
+  return function (pageChildren: IFieldConfig[], handleKey: HandleKey = HANDLE_KV.UPDATE_PAGE) {
     updateHistory((page: IPageConfig) => {
       page.children = pageChildren
-    }, HANDLE_VL[HANDLE_KV.IMPORT_PAGE])
+    }, HANDLE_VL[handleKey])
   }
 }

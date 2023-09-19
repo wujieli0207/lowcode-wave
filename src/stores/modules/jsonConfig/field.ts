@@ -1,16 +1,26 @@
 import { Ref } from 'vue'
 import { foreach, find } from 'tree-lodash'
-import {
-  FieldEvents,
-  IFieldConfig,
-  IFieldProps,
-  IPageConfig,
-  IOperationConfigArgs,
-  IOperation
-} from '#/editor'
+import { FieldEvents, IFieldConfig, IFieldProps, IPageConfig, IOperation } from '#/editor'
 import { HANDLE_KV, HANDLE_VL } from '@/constant/eventConstant'
 import { updateHistoryFn } from './page'
-import { cloneDeep } from 'lodash-es'
+
+type setCurrentFiledFn = (field: IFieldConfig, isSetFocus?: boolean) => void
+
+/**
+ * @description 更新 currentPage 之后,重置当前选中组件
+ */
+export function resetCurrentField(setCurrentFiled: setCurrentFiledFn) {
+  return function (currentPage: Ref<IPageConfig>, currentField: Ref<Nullable<IFieldConfig>>) {
+    if (currentField.value) {
+      const fieldItem = find(
+        currentPage.value.children,
+        (item) => (item as unknown as IFieldConfig)._id === currentField.value?._id
+      ) as unknown as IFieldConfig
+
+      setCurrentFiled(fieldItem, false)
+    }
+  }
+}
 
 /**
  * @description 设置组件是否被选中

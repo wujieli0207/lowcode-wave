@@ -8,7 +8,7 @@ import {
   addPageChildrenByDrag,
   clearPageChildren,
   deletePageChildren,
-  importPageChildren,
+  updatePageChildren,
   movePageChildren
 } from './page'
 import {
@@ -20,7 +20,8 @@ import {
   deleteFieldEvent,
   addFieldEventOperation,
   moveFieldEventOperation,
-  deleteFieldEventOperation
+  deleteFieldEventOperation,
+  resetCurrentField
 } from './field'
 
 const defaultPage: IPageConfig = {
@@ -74,12 +75,13 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     currentField,
     currentPage,
     setCurrentFiled,
+    resetCurrentField: resetCurrentField(setCurrentFiled),
     // page 相关操作
     addPageChildren: addPageChildren(updateHistory, currentPage),
     addPageChildrenByDrag: addPageChildrenByDrag(updateHistory, currentPage),
     deletePageChildren: deletePageChildren(updateHistory),
     clearPageChildren: clearPageChildren(updateHistory),
-    importPageChildren: importPageChildren(updateHistory),
+    updatePageChildren: updatePageChildren(updateHistory),
     movePageChildren: movePageChildren(updateHistory, currentPage),
     // field 相关操作
     updateFieldCode: updateFieldCode(currentField, updateHistory),

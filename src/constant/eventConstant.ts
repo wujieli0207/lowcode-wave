@@ -40,6 +40,7 @@ export const { OP_TYPE_KV, OP_TYPE_VL } = defineConstants(
 export const { HANDLE_KV, HANDLE_VL } = defineConstants(
   [
     // 页面相关
+    { key: 'UPDATE_PAGE', value: 'updatePage', label: '更新页面' },
     { key: 'IMPORT_PAGE', value: 'importPage', label: '导入页面' },
     { key: 'CLEAR_PAGE', value: 'clearPage', label: '清空页面' },
     // 组件相关

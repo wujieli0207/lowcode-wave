@@ -20,7 +20,7 @@ export function handleViewJson(element: IFieldConfig) {
     title: '节点信息',
     content: () => (
       <>
-        <JsonEditor value={JSON.stringify(element, null, 2)} height="300px" />
+        <JsonEditor moduleValue={JSON.stringify(element, null, 2)} height="300px" />
       </>
     )
   })

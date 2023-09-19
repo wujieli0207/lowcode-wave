@@ -1,55 +1,49 @@
 import { IFieldConfig, IPageConfig } from '#/editor'
 import { JsonEditor } from '@/components/Editor'
+import { HANDLE_KV } from '@/constant/eventConstant'
 import { useModal } from '@/hooks/useModal'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { useClipboard } from '@vueuse/core'
 import { ElNotification, ElAlert } from 'element-plus'
-import { find } from 'lodash-es'
-import { storeToRefs } from 'pinia'
 import { Ref, ref } from 'vue'
 
 const jsonConfigStore = useJsonConfigStore()
-const { currentField } = storeToRefs(jsonConfigStore)
-const { setCurrentFiled, undo, redo, clearPageChildren, importPageChildren } = jsonConfigStore
-
-/**
- * @description 撤销和重做之后，重置当前选中组件
- */
-function _resetCurrentField(currentPage: Ref<IPageConfig>) {
-  if (currentField.value) {
-    const fieldItem = find(
-      currentPage.value.children,
-      (item) => (item as unknown as IFieldConfig)._id === currentField.value?._id
-    ) as unknown as IFieldConfig
-
-    setCurrentFiled(fieldItem, false)
-  }
-}
+const { resetCurrentField, undo, redo, clearPageChildren, updatePageChildren } = jsonConfigStore
 
 /**
  *
  * @description 撤销
  */
-export function handleUndo(currentPage: Ref<IPageConfig>) {
+export function handleUndo(
+  currentPage: Ref<IPageConfig>,
+  currentField: Ref<Nullable<IFieldConfig>>
+) {
   undo()
-  _resetCurrentField(currentPage)
+  resetCurrentField(currentPage, currentField)
 }
 
 /**
  *
  * @description 重做
  */
-export function handleRedo(currentPage: Ref<IPageConfig>) {
+export function handleRedo(
+  currentPage: Ref<IPageConfig>,
+  currentField: Ref<Nullable<IFieldConfig>>
+) {
   redo()
-  _resetCurrentField(currentPage)
+  resetCurrentField(currentPage, currentField)
 }
 
 /**
  *
  * @description 清空页面
  */
-export function handleClearPage() {
+export function handleClearPage(
+  currentPage: Ref<IPageConfig>,
+  currentField: Ref<Nullable<IFieldConfig>>
+) {
   clearPageChildren()
+  resetCurrentField(currentPage, currentField)
 
   ElNotification({
     message: '清空页面成功',
@@ -63,8 +57,11 @@ export function handleClearPage() {
  * @description 导入 JSON
  *
  */
-export function handleImportJSON(currentPage: IPageConfig) {
-  const editorValue = ref(JSON.stringify(currentPage.children, null, 2))
+export function handleImportJSON(
+  currentPage: Ref<IPageConfig>,
+  currentField: Ref<Nullable<IFieldConfig>>
+) {
+  const editorValue = ref(JSON.stringify(currentPage.value.children, null, 2))
   const hangelEditorChange = (value) => {
     editorValue.value = value
   }
@@ -78,13 +75,15 @@ export function handleImportJSON(currentPage: IPageConfig) {
           show-icon={true}
           closable={false}
         />
-        <JsonEditor value={editorValue.value} height="300px" onChange={hangelEditorChange} />
+        <JsonEditor moduleValue={editorValue.value} height="300px" onChange={hangelEditorChange} />
       </>
     ),
     onComfirm: () => {
       try {
         const json = JSON.parse(editorValue.value)
-        importPageChildren(json)
+        updatePageChildren(json, HANDLE_KV.IMPORT_PAGE)
+        resetCurrentField(currentPage, currentField)
+
         ElNotification({
           message: '导入成功',
           type: 'success',

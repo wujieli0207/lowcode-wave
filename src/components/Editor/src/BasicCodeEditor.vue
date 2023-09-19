@@ -50,8 +50,10 @@ onMounted(() => {
   }
 
   if (inputEditor) {
-    inputEditor.onDidChangeModelContent((event) => {
+    // 光标离开编辑器触发
+    inputEditor.onDidBlurEditorText((event) => {
       const value = inputEditor.getValue()
+
       if (value !== props.value) {
         emit('change', value, event)
         emit('update:value', value)

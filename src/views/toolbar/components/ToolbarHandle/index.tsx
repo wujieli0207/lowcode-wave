@@ -16,7 +16,7 @@ export default defineComponent({
   setup() {
     const jsonConfigStore = useJsonConfigStore()
 
-    const { currentPage, undoCount, redoCount } = storeToRefs(jsonConfigStore)
+    const { currentPage, currentField, undoCount, redoCount } = storeToRefs(jsonConfigStore)
 
     const handleList = [
       {
@@ -25,12 +25,12 @@ export default defineComponent({
           {
             label: '撤销',
             icon: RefreshLeft,
-            click: () => handleUndo(currentPage)
+            click: () => handleUndo(currentPage, currentField)
           },
           {
             label: '重做',
             icon: RefreshRight,
-            click: () => handleRedo(currentPage)
+            click: () => handleRedo(currentPage, currentField)
           }
         ]
       },
@@ -40,12 +40,12 @@ export default defineComponent({
           {
             label: '清空页面',
             icon: Delete,
-            click: () => handleClearPage()
+            click: () => handleClearPage(currentPage, currentField)
           },
           {
             label: '导入JSON',
             icon: Upload,
-            click: () => handleImportJSON(currentPage.value)
+            click: () => handleImportJSON(currentPage, currentField)
           },
           {
             label: '导出JSON',

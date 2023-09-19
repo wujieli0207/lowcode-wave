@@ -1,6 +1,6 @@
 import type { IBasePlugin } from '#/plugin'
 
-const modules = import.meta.glob('./**/*.(tsx|vue)', { eager: true })
+const modules = import.meta.glob('./*/index.(tsx|vue)', { eager: true })
 const plugins: Record<string, IBasePlugin> = {}
 
 for (const key in modules) {
