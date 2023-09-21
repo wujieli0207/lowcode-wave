@@ -46,7 +46,9 @@ export type ComponentConfigProps = {
   type: ComponentConfigType
 } & IDefaultPropsConfig &
   ISelectPropsConfig &
-  IInputNumberPropsConfig
+  IInputPropsConfig &
+  IInputNumberPropsConfig &
+  ISwitchPropsConfig
 
 export interface IDefaultPropsConfig {
   label: string // 配置项标题
@@ -67,4 +69,7 @@ export interface IInputNumberPropsConfig extends IDefaultPropsConfig {
   max?: number
 }
 
-export interface ISwitchPropsConfig extends IDefaultPropsConfig {}
+export interface ISwitchPropsConfig extends IDefaultPropsConfig {
+  activeText?: string // switch 打开时的文字描述
+  inactiveText?: string // switch 关闭时的文字描述
+}

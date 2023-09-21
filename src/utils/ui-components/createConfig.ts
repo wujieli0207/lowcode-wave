@@ -58,13 +58,23 @@ export function createInputNumberPropsConfig(params: IInputNumberPropsConfig) {
  * @description 创建开关的配置项
  */
 export function createSwitchPropsConfig(params: ISwitchPropsConfig) {
-  const { label, tips, defaultValue, labelWidth = '220px', isRequired } = params
+  const {
+    label,
+    tips,
+    defaultValue,
+    labelWidth = '220px',
+    isRequired,
+    activeText,
+    inactiveText
+  } = params
   return {
     type: ComponentConfigType.SWITCH,
     label,
     tips,
     defaultValue,
     labelWidth,
-    isRequired
+    isRequired,
+    activeText,
+    inactiveText
   }
 }

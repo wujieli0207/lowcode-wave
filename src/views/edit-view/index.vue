@@ -21,11 +21,12 @@
             }"
             @mousedown="(payload) => handleSelectComponent(element, payload)"
           >
-            <render-comp :element="element" :pageChildren="currentPage.children">
+            <render-comp :element="element" :page-children="currentPage.children">
               <template #default>
                 <render-slot-item
-                  v-model:children="element.children"
-                  :pageChildren="currentPage.children"
+                  :children="element.children"
+                  :page-children="currentPage.children"
+                  :parrent-element="element"
                   slot-key="default"
                   :select-component-fn="handleSelectComponent"
                 />
@@ -65,6 +66,7 @@ function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
 }
 
 function handleOnChange(value: VueDraggableChangeEvent) {
+  console.log('out value: ', value)
   addPageChildrenByDrag(value)
 }
 </script>

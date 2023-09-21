@@ -1,7 +1,7 @@
 import { ComponentConfigProps } from '#/components'
 import { IOperation } from '#/editor'
 import { OP_TYPE_KV } from '@/constant/eventConstant'
-import { createInputPropsConfig } from '@/utils/ui-components'
+import { createInputPropsConfig, createSwitchPropsConfig } from '@/utils/ui-components'
 
 interface IOperationConfigGroup {
   groupName: string // 操作分组
@@ -30,6 +30,12 @@ export const operationConfig: IOperationConfigGroup[] = [
           url: createInputPropsConfig({
             label: '链接地址',
             isRequired: true
+          }),
+          isOpenBlank: createSwitchPropsConfig({
+            label: '是否新窗口打开',
+            defaultValue: false,
+            activeText: '是',
+            inactiveText: '否'
           })
         }
       },

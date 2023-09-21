@@ -1,5 +1,9 @@
 <template>
-  <draggable-transition-group v-model="slotChildren" v-model:drag="isDrag" class="slot-renderer">
+  <draggable-transition-group
+    :module-value="slotChildren"
+    class="slot-renderer"
+    @change="handleOnChange"
+  >
     <template #item="{ element: slotElement }">
       <div
         class="edit__drag-group__item"
@@ -12,8 +16,9 @@
         <render-comp :element="slotElement" :page-children="pageChildren">
           <template #default>
             <render-slot-item
-              v-model:children="slotElement.children"
-              :pageChildren="pageChildren"
+              :children="slotElement.children"
+              :page-children="pageChildren"
+              :parrent-element="slotElement"
               slot-key="default"
               :select-component-fn="selectComponentFn"
             />
@@ -28,12 +33,13 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
-import { useVModel } from '@vueuse/core'
+import { computed, PropType } from 'vue'
+import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './RenderComp'
 import { IFieldConfig } from '#/editor'
 import { getIsContainerComponent } from '../utils'
+import { VueDraggableChangeEvent } from '#/plugin'
 
 const props = defineProps({
   // 插槽子节点
@@ -44,6 +50,11 @@ const props = defineProps({
   // 当前页面的子节点
   pageChildren: {
     type: Array as PropType<IFieldConfig[]>,
+    required: true
+  },
+  // 父节点
+  parrentElement: {
+    type: Object as PropType<IFieldConfig>,
     required: true
   },
   drag: {
@@ -60,15 +71,22 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:children', 'update:drag'])
+const jsonConfigStore = useJsonConfigStore()
 
-const slotChildren = useVModel(props, 'children', emit)
-const isDrag = useVModel(props, 'drag', emit)
+const { addPageNestChildrenByDrag } = jsonConfigStore
+
+const slotChildren = computed(() => {
+  return props.children
+})
 
 function handleSelect(element: IFieldConfig, payload: MouseEvent) {
   payload.stopPropagation()
 
   props.selectComponentFn(element, payload)
+}
+
+function handleOnChange(value: VueDraggableChangeEvent) {
+  addPageNestChildrenByDrag(value, props.parrentElement)
 }
 </script>
 

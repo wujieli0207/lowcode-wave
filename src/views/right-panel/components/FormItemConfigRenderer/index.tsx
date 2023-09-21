@@ -69,7 +69,15 @@ const FormItemConfigRenderer = (
     )
   }
   if (type === ComponentConfigType.SWITCH) {
-    element = <ElSwitch v-model={modelValue.value} />
+    const { activeText = '', inactiveText = '' } = config
+    element = (
+      <ElSwitch
+        v-model={modelValue.value}
+        inline-prompt={true}
+        activeText={activeText}
+        inactiveText={inactiveText}
+      />
+    )
   }
 
   return (

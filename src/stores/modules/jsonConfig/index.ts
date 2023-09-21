@@ -6,6 +6,7 @@ import { reactive, ref } from 'vue'
 import {
   addPageChildren,
   addPageChildrenByDrag,
+  addPageNestChildrenByDrag,
   clearPageChildren,
   deletePageChildren,
   updatePageChildren,
@@ -80,6 +81,7 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     // page 相关操作
     addPageChildren: addPageChildren(updateHistory, currentPage),
     addPageChildrenByDrag: addPageChildrenByDrag(updateHistory, currentPage),
+    addPageNestChildrenByDrag: addPageNestChildrenByDrag(updateHistory),
     deletePageChildren: deletePageChildren(updateHistory),
     clearPageChildren: clearPageChildren(updateHistory),
     updatePageChildren: updatePageChildren(updateHistory),

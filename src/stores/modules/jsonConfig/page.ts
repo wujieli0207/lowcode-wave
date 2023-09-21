@@ -2,6 +2,7 @@ import { HandleKey, IFieldConfig, IPageConfig } from '#/editor'
 import { VueDraggableChangeEvent } from '#/plugin'
 import { HANDLE_KV, HANDLE_VL } from '@/constant/eventConstant'
 import { IUpdateOptions } from '@/hooks/useHistory'
+import { find } from 'tree-lodash'
 import { Ref } from 'vue'
 
 export type updateHistoryFn = (
@@ -28,6 +29,35 @@ export function addPageChildrenByDrag(
       updateHistory((page: IPageConfig) => {
         page.children.splice(newIndex, 0, field.added.element)
       }, HANDLE_VL[HANDLE_KV.ADD_FIELD_BEFORE])
+    }
+  }
+}
+
+export function addPageNestChildrenByDrag(updateHistory: updateHistoryFn) {
+  return function (field: VueDraggableChangeEvent<IFieldConfig>, parrentField: IFieldConfig) {
+    const newIndex = field.added.newIndex
+    console.log('in newIndex: ', newIndex)
+
+    const nestChildren = parrentField.children
+
+    if (newIndex === nestChildren.length) {
+      updateHistory((page: IPageConfig) => {
+        const fieldItem = find(
+          page.children,
+          (item) => (item as unknown as IFieldConfig)._id === parrentField._id
+        ) as unknown as IFieldConfig
+
+        fieldItem.children.push(field.added.element)
+      }, HANDLE_VL[HANDLE_KV.ADD_NEST_FIELD_AFTER])
+    } else {
+      updateHistory((page: IPageConfig) => {
+        const fieldItem = find(
+          page.children,
+          (item) => (item as unknown as IFieldConfig)._id === parrentField._id
+        ) as unknown as IFieldConfig
+
+        fieldItem.children.splice(newIndex, 0, field.added.element)
+      }, HANDLE_VL[HANDLE_KV.ADD_NEST_FIELD_BEFORE])
     }
   }
 }

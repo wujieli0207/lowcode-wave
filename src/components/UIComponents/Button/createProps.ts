@@ -48,11 +48,15 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
         }),
         round: createSwitchPropsConfig({
           label: '是否圆角',
-          defaultValue: false
+          defaultValue: false,
+          activeText: '是',
+          inactiveText: '否'
         }),
         text: createSwitchPropsConfig({
           label: '是否是文字按钮',
-          defaultValue: false
+          defaultValue: false,
+          activeText: '是',
+          inactiveText: '否'
         })
       }
     },

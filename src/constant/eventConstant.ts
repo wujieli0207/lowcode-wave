@@ -46,6 +46,8 @@ export const { HANDLE_KV, HANDLE_VL } = defineConstants(
     // 组件相关
     { key: 'ADD_FIELD_BEFORE', value: 'addFieldBefore', label: '前置插入组件' },
     { key: 'ADD_FIELD_AFTER', value: 'addFieldAfter', label: '后置插入组件' },
+    { key: 'ADD_NEST_FIELD_BEFORE', value: 'addNestFieldBefore', label: '前置插入嵌套组件' },
+    { key: 'ADD_NEST_FIELD_AFTER', value: 'ADD_NEST_FIELD_AFTER', label: '后置插入嵌套组件' },
     { key: 'SET_FOCUS', value: 'setFocus', label: '选中组件' },
     { key: 'DELETE_FIELD', value: 'deleteField', label: '删除组件' },
     { key: 'MOVE_FIELD_UP', value: 'moveFieldUp', label: '上移组件' },
