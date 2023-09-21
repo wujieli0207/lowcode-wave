@@ -21,7 +21,8 @@ import {
   addFieldEventOperation,
   moveFieldEventOperation,
   deleteFieldEventOperation,
-  resetCurrentField
+  resetCurrentField,
+  updateFieldEventOperation
 } from './field'
 
 const defaultPage: IPageConfig = {
@@ -92,6 +93,7 @@ export const useJsonConfigStore = defineStore('jsonConfig', () => {
     addFieldEventOperation: addFieldEventOperation(currentField, updateHistory),
     moveFieldEventOperation: moveFieldEventOperation(currentField, updateHistory),
     deleteFieldEventOperation: deleteFieldEventOperation(currentField, updateHistory),
+    updateFieldEventOperation: updateFieldEventOperation(currentField, updateHistory),
     // 撤销和重做
     undoCount,
     redoCount,

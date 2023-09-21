@@ -16,3 +16,8 @@ export type VueDraggableChangeEvent<T = any> = {
     oldIndex?: number // moved 时才有
   }
 }
+
+export interface IVueDraggableSlotParams<T> {
+  element: T
+  index?: number
+}

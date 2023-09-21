@@ -53,6 +53,7 @@ export interface IDefaultPropsConfig {
   tips?: string // 配置项提示
   defaultValue?: string | number | boolean // 配置项默认值
   labelWidth?: string // 标签长度
+  isRequired?: boolean // 是否必填
 }
 
 export interface ISelectPropsConfig extends IDefaultPropsConfig {

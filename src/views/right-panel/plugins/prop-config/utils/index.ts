@@ -1,6 +1,7 @@
 import uiComponents from '@/components/UIComponents'
 import { IFieldConfig } from '#/editor'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
+import { IUpdateValueFnParams } from '@/views/right-panel/components/FormItemConfigRenderer'
 
 const jsonConfigStore = useJsonConfigStore()
 const { updateFieldProps, updateFieldCode } = jsonConfigStore
@@ -25,13 +26,8 @@ export function handleUpdateFieldCode(field: IFieldConfig, code: string) {
   updateFieldCode(field, code)
 }
 
-interface IUpdateFieldProps {
-  value: string | number | boolean
-  propKey: string
-  field: IFieldConfig
-}
-export function handleUpdateFieldProps(params: IUpdateFieldProps) {
-  const { value, propKey, field } = params
+export function handleUpdateFieldProps(params: IUpdateValueFnParams) {
+  const { value, key, field } = params
 
-  updateFieldProps(field, { [propKey]: value })
+  updateFieldProps(field, { [key]: value })
 }

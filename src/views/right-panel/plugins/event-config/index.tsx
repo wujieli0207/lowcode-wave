@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import styles from './index.module.scss'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { storeToRefs } from 'pinia'
@@ -10,6 +10,8 @@ import { handleAddEvent, handleDeleteEvent, handleEditEvent } from './utils'
 import { Plus, Delete } from '@element-plus/icons-vue'
 import { IFieldConfig, EventKey, IOperation } from '#/editor'
 import { OperationCard } from './components'
+import { IVueDraggableSlotParams } from '#/plugin'
+import { EditEnum } from '@/constant/commonConstant'
 
 export default defineComponent({
   key: 'EventConfigPlugin',
@@ -26,7 +28,7 @@ export default defineComponent({
         tips: '新增事件',
         icon: Plus,
         click: (field: IFieldConfig, eventKey: EventKey) => {
-          handleEditEvent(field, eventKey)
+          handleEditEvent({ field, eventKey, editType: EditEnum.ADD })
         }
       },
       {
@@ -124,9 +126,10 @@ export default defineComponent({
                               group={{ name: 'components', put: false }}
                             >
                               {{
-                                item: ({ element }: { element: IOperation }) => (
+                                item: ({ element, index }: IVueDraggableSlotParams<IOperation>) => (
                                   <OperationCard
                                     operation={element}
+                                    operationIndex={index}
                                     field={currentField}
                                     eventKey={eventKey as EventKey}
                                   />

@@ -1,5 +1,7 @@
+import { ComponentConfigProps } from '#/components'
 import { IOperation } from '#/editor'
 import { OP_TYPE_KV } from '@/constant/eventConstant'
+import { createInputPropsConfig } from '@/utils/ui-components'
 
 interface IOperationConfigGroup {
   groupName: string // 操作分组
@@ -11,6 +13,7 @@ export interface IOperationConfig {
   args: IOperation['args'] // 操作参数
   ignoreError?: boolean // 是否忽略错误
   isFocus: boolean // 是否被选中
+  argsConfig?: Record<string, ComponentConfigProps> // args 操作参数配置
 }
 
 export const operationConfig: IOperationConfigGroup[] = [
@@ -22,14 +25,13 @@ export const operationConfig: IOperationConfigGroup[] = [
         args: {
           desc: '跳转到制定链接页面'
         },
-        isFocus: false
-      },
-      {
-        opType: OP_TYPE_KV.OPEN,
-        args: {
-          desc: '打开指定页面'
-        },
-        isFocus: false
+        isFocus: false,
+        argsConfig: {
+          url: createInputPropsConfig({
+            label: '链接地址',
+            isRequired: true
+          })
+        }
       },
       {
         opType: OP_TYPE_KV.REFRESH_PAGE,

@@ -1,6 +1,14 @@
 import { Ref } from 'vue'
 import { foreach, find } from 'tree-lodash'
-import { FieldEvents, IFieldConfig, IFieldProps, IPageConfig, IOperation } from '#/editor'
+import {
+  FieldEvents,
+  IFieldConfig,
+  IFieldProps,
+  IPageConfig,
+  IOperation,
+  OperationType,
+  IOperationConfigArgs
+} from '#/editor'
 import { HANDLE_KV, HANDLE_VL } from '@/constant/eventConstant'
 import { updateHistoryFn } from './page'
 
@@ -302,6 +310,47 @@ export function deleteFieldEventOperation(
               ...currentField.value.events,
               [eventKey]: {
                 actions: currentActions
+              }
+            }
+          }
+        }
+      }
+    )
+  }
+}
+
+/**
+ * @description 更新组件事件操作
+ */
+export function updateFieldEventOperation(
+  currentField: Ref<Nullable<IFieldConfig>>,
+  updateHistory: updateHistoryFn
+) {
+  return function (
+    field: IFieldConfig,
+    eventKey: string,
+    operationIndex: number,
+    operationType: OperationType,
+    args: Omit<IOperationConfigArgs, 'desc'>
+  ) {
+    updateHistory(
+      (page: IPageConfig) => {
+        const fieldItem = find(
+          page.children,
+          (item) => (item as unknown as IFieldConfig)._id === field._id
+        ) as unknown as IFieldConfig
+
+        fieldItem.events[eventKey].actions[operationIndex].args = args
+      },
+      HANDLE_VL[HANDLE_KV.UPDATE_OPERATION],
+      {
+        callback: () => {
+          if (currentField.value?.events[eventKey]) {
+            currentField.value.events[eventKey].actions[operationIndex] = {
+              ...currentField.value.events[eventKey].actions[operationIndex],
+              args: {
+                ...currentField.value.events[eventKey].actions[operationIndex].args,
+                ...args
               }
             }
           }

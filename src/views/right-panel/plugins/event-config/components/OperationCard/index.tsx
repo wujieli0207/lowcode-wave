@@ -4,6 +4,8 @@ import styles from './index.module.scss'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import { EventKey, IFieldConfig, IOperation } from '#/editor'
 import { OP_TYPE_VL } from '@/constant/eventConstant'
+import { handleEditEvent } from '../../utils'
+import { EditEnum } from '@/constant/commonConstant'
 
 export const OperationCard = defineComponent({
   name: 'OperationCard',
@@ -11,6 +13,10 @@ export const OperationCard = defineComponent({
     operation: {
       type: Object as PropType<IOperation>,
       default: () => {}
+    },
+    operationIndex: {
+      type: Number,
+      default: 0
     },
     field: {
       type: Object as PropType<Ref<Nullable<IFieldConfig>>>,
@@ -43,7 +49,19 @@ export const OperationCard = defineComponent({
 
           <div class={styles['card__header__handle']}>
             <el-tooltip content="编辑操作" placement="top">
-              <el-icon class={styles['handle__icon']}>
+              <el-icon
+                class={styles['handle__icon']}
+                onClick={() => {
+                  if (props.field.value) {
+                    handleEditEvent({
+                      field: props.field.value,
+                      eventKey: props.eventKey,
+                      operationIndex: props.operationIndex,
+                      editType: EditEnum.EDIT
+                    })
+                  }
+                }}
+              >
                 <Edit />
               </el-icon>
             </el-tooltip>

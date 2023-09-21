@@ -21,7 +21,7 @@ export const { OP_TYPE_KV, OP_TYPE_VL } = defineConstants(
   [
     // 页面操作
     { key: 'REDIRECT', value: 'redirect', label: '跳转链接' },
-    { key: 'OPEN', value: 'open', label: '打开页面' },
+    { key: 'OPEN', value: 'open', label: '打开页面' }, // TODO: 未实现
     { key: 'REFRESH_PAGE', value: 'refreshPage', label: '刷新页面' },
     // 组件操作
     { key: 'VISIBLE', value: 'visible', label: '组件是否展示' },
