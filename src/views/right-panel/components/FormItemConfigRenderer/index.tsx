@@ -4,7 +4,7 @@ import { BasicHelp } from '@/components/Basic'
 import { ComponentConfigProps, ComponentConfigType } from '#/components'
 import { IFieldConfig } from '#/editor'
 import styles from './index.module.scss'
-import { isFunction } from 'lodash-es'
+import { isFunction, isNil } from 'lodash-es'
 
 export interface IUpdateValueFnParams {
   value: string | number | boolean
@@ -30,7 +30,7 @@ const FormItemConfigRenderer = (
   let element
   const { type, label, tips, options, defaultValue, labelWidth } = config
 
-  if (defaultValue) {
+  if (defaultValue && isNil(propsObj[key])) {
     // 此处类型定义有问题，暂时忽略
     // @ts-ignore
     propsObj[key] = defaultValue
@@ -52,6 +52,7 @@ const FormItemConfigRenderer = (
       }
     }
   })
+  console.log('modelValue: ', key, propsObj, modelValue.value)
 
   if (type === ComponentConfigType.INPUT) {
     element = <ElInput v-model={modelValue.value} placeholder={label} />

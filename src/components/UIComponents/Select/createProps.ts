@@ -1,6 +1,11 @@
 import { IComponentConfigPropGroup } from '#/components'
 import { IFieldProps } from '#/editor'
-import { createSelectPropsConfig, createSwitchPropsConfig } from '@/utils/ui-components'
+import {
+  createInputNumberPropsConfig,
+  createInputPropsConfig,
+  createSelectPropsConfig,
+  createSwitchPropsConfig
+} from '@/utils/ui-components'
 
 export interface ISelectPropsConfig {
   size?: 'large' | 'default' | 'small' // 尺寸
@@ -13,7 +18,22 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
     {
       groupName: '基础',
       children: {
-        type: createSelectPropsConfig({
+        placeholder: createInputPropsConfig({
+          label: '占位符'
+        }),
+        clearable: createSwitchPropsConfig({
+          label: '是否可以清空',
+          defaultValue: true,
+          activeText: '是',
+          inactiveText: '否'
+        }),
+        filterable: createSwitchPropsConfig({
+          label: '是否可以筛选',
+          defaultValue: true,
+          activeText: '是',
+          inactiveText: '否'
+        }),
+        size: createSelectPropsConfig({
           label: '尺寸',
           options: [
             {
@@ -29,13 +49,23 @@ export function createProps(): IComponentConfigPropGroup<IFieldProps>[] {
               value: 'large'
             }
           ]
-        }),
-        multiple: createSwitchPropsConfig({
-          label: '是否可以多选'
-        }),
-        clearable: createSwitchPropsConfig({
-          label: '是否可以清空'
         })
+        // TODO 是否可以多选可能存在问题
+        // multiple: createSwitchPropsConfig({
+        //   label: '是否可以多选',
+        //   defaultValue: false,
+        //   activeText: '是',
+        //   inactiveText: '否'
+        // }),
+        // collapseTags: createSwitchPropsConfig({
+        //   label: '多选时选中值以文字形式展示',
+        //   defaultValue: false,
+        //   activeText: '是',
+        //   inactiveText: '否'
+        // }),
+        // multipleLimit: createInputNumberPropsConfig({
+        //   label: '多选最多选择项目数'
+        // })
       }
     },
     {

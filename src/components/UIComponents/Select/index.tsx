@@ -8,8 +8,8 @@ export default {
   isBasic: true,
   tags: [UI_TAG_KV.FORM],
   preview: () => <el-select placeholder="请选择"></el-select>,
-  render: () => {
-    return <el-select>下拉选择</el-select>
+  render: ({ props }) => {
+    return <el-select {...props}>下拉选择</el-select>
   },
   props: createProps()
 } as IUIComponent
