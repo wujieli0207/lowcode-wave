@@ -1,7 +1,17 @@
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 import { ElMessage } from 'element-plus'
 
+const { togglePreview } = useGlobalConfigStore()
+
+/**
+ * @description: 返回编辑状态
+ */
+export function handleGoBackEdit() {
+  togglePreview(false)
+}
+
 export function handlePreview() {
-  console.log('handlePreview 待实现: ')
+  togglePreview(true)
 }
 
 export function handleSave() {

@@ -16,8 +16,8 @@
           <div
             class="edit__drag-group__item"
             :class="{
-              focus: element.isFocus,
-              overlay: !getIsContainerComponent(element)
+              focus: !globalConfig.isPreview && element.isFocus,
+              overlay: !globalConfig.isPreview && !getIsContainerComponent(element)
             }"
             @mousedown="(payload) => handleSelectComponent(element, payload)"
           >
@@ -45,20 +45,22 @@ import { DraggableTransitionGroup } from '@/components/Drag'
 import RenderComp from './components/RenderComp'
 import RenderSlotItem from './components/RenderSlotItem.vue'
 import EditorHeader from './components/EditorHeader'
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 import { useJsonConfigStore } from '@/stores/modules/jsonConfig'
 import type { IFieldConfig } from '#/editor'
 import { getIsContainerComponent } from './utils'
 import { VueDraggableChangeEvent } from '#/plugin'
 
+const { globalConfig } = useGlobalConfigStore()
+
 const jsonConfigStore = useJsonConfigStore()
-
 const { currentPage, currentField } = storeToRefs(jsonConfigStore)
-
 const { setCurrentFiled, addPageChildrenByDrag } = jsonConfigStore
 
 function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
   // 如果不是 div 元素，说明点击的是 toolbar 的操作按钮，一般是 svg，不需要处理
-  if (!(payload.target instanceof HTMLDivElement)) {
+  // 如果是预览模式，也不需要处理
+  if (!(payload.target instanceof HTMLDivElement) || globalConfig.isPreview) {
     return
   }
 
@@ -66,7 +68,6 @@ function handleSelectComponent(element: IFieldConfig, payload: MouseEvent) {
 }
 
 function handleOnChange(value: VueDraggableChangeEvent) {
-  console.log('out value: ', value)
   addPageChildrenByDrag(value)
 }
 </script>

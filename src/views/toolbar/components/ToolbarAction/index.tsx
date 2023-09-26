@@ -1,9 +1,12 @@
 import { defineComponent } from 'vue'
-import { handlePreview, handleSave } from './utils'
+import { handleGoBackEdit, handlePreview, handleSave } from './utils'
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 
 export default defineComponent({
   name: 'ToolbarAction',
   setup() {
+    const { globalConfig } = useGlobalConfigStore()
+
     const actionList = [
       {
         label: '预览',
@@ -17,9 +20,17 @@ export default defineComponent({
       }
     ]
 
+    const previewList = [
+      {
+        label: '返回',
+        type: 'default',
+        onClick: handleGoBackEdit
+      }
+    ]
+
     return () => (
       <div>
-        {actionList.map((item) => (
+        {(globalConfig.isPreview ? previewList : actionList).map((item) => (
           <el-button type={item.type} onClick={item.onClick} key={item.label}>
             {item.label}
           </el-button>

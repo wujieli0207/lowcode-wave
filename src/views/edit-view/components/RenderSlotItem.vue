@@ -8,8 +8,8 @@
       <div
         class="edit__drag-group__item"
         :class="{
-          focus: slotElement.isFocus,
-          overlay: !getIsContainerComponent(slotElement)
+          focus: !globalConfig.isPreview && slotElement.isFocus,
+          overlay: !globalConfig.isPreview && !getIsContainerComponent(slotElement)
         }"
         @mousedown="(payload) => handleSelect(slotElement, payload)"
       >
@@ -40,6 +40,7 @@ import RenderComp from './RenderComp'
 import { IFieldConfig } from '#/editor'
 import { getIsContainerComponent } from '../utils'
 import { VueDraggableChangeEvent } from '#/plugin'
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 
 const props = defineProps({
   // 插槽子节点
@@ -70,6 +71,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const { globalConfig } = useGlobalConfigStore()
 
 const jsonConfigStore = useJsonConfigStore()
 

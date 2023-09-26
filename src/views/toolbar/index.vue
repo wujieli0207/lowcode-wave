@@ -5,8 +5,8 @@
     </div>
 
     <!-- 中间操作按钮 -->
-    <div class="toolbar__handle">
-      <ToolbarHandle />
+    <div class="toolbar__handle" v-if="!globalConfig.isPreview">
+      <toolbar-handle />
     </div>
 
     <!-- 右侧编辑按钮 -->
@@ -17,8 +17,11 @@
 </template>
 
 <script lang="ts" setup>
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 import ToolbarHandle from './components/ToolbarHandle'
 import ToolbarAction from './components/ToolbarAction'
+
+const { globalConfig } = useGlobalConfigStore()
 </script>
 
 <style scoped lang="scss">

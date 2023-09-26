@@ -3,6 +3,7 @@ import FieldToolbar from '../FieldToolbar'
 import uiComponents from '@/components/UIComponents'
 import type { IFieldConfig, IPageConfig } from '#/editor'
 import styles from './index.module.scss'
+import { useGlobalConfigStore } from '@/stores/modules/globalConfig'
 
 export default defineComponent({
   name: 'RenderComp',
@@ -17,10 +18,12 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { globalConfig } = useGlobalConfigStore()
+
     return () => {
       return (
         <div class={styles['container']}>
-          {props.element.isFocus && (
+          {props.element.isFocus && !globalConfig.isPreview && (
             <div class={styles['feild-toolbar']}>
               <FieldToolbar element={props.element} pageChildren={props.pageChildren} />
             </div>
