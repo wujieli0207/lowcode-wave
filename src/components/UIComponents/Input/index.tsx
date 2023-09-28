@@ -8,8 +8,8 @@ export default {
   isBasic: true,
   tags: [UI_TAG_KV.FORM],
   preview: () => <el-input placeholder="请输入" />,
-  render: () => {
-    return <el-input>输入框</el-input>
+  render: ({ props }) => {
+    return <el-input {...props}>输入框</el-input>
   },
   props: createProps()
 } as IUIComponent
